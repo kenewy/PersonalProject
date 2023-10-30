@@ -60,8 +60,22 @@ title: "Prévisions Météo"
 
 
 
+import requests
 
-url_current = https://open-meteo.com/en/docs/meteofrance-api#latitude=43.6109&longitude=3.8763&current=temperature_2m,precipitation,windspeed_10m&hourly=&timezone=Europe%2FBerlin
+url = https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&timezone=Europe%2FBerlin
 
-url_daily = https://open-meteo.com/en/docs/meteofrance-api#latitude=43.6109&longitude=3.8763&current=&hourly=&daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&timezone=Europe%2FBerlin
+params = {
+    "q": "Nom_de_la_ville",
+    "appid": "url"
+}
 
+response = requests.get(url, params=params)
+data = response.json()
+
+# Accéder aux données météo à partir de la réponse JSON
+temperature = data["main"]["temp"]
+humidite = data["main"]["humidity"]
+
+# Utilisez les données comme bon vous semble
+print("Température : ", temperature)
+print("Humidité : ", humidite)

@@ -244,10 +244,20 @@ Prévisibilité
 </tr>
 
 </tbody></table>
-<p>url_current = https://open-meteo.com/en/docs/meteofrance-api#latitude=43.6109&amp;longitude=3.8763&amp;current=temperature_2m,precipitation,windspeed_10m&amp;hourly=&amp;timezone=Europe%2FBerlin</p>
-<p>url_daily = https://open-meteo.com/en/docs/meteofrance-api#latitude=43.6109&amp;longitude=3.8763&amp;current=&amp;hourly=&amp;daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&amp;timezone=Europe%2FBerlin</p>
+<p>import requests</p>
+<p>url = https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&amp;longitude=3.8763&amp;daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&amp;timezone=Europe%2FBerlin</p>
+<p>params = { “q”: “Nom_de_la_ville”, “appid”: “url” }</p>
+<p>response = requests.get(url, params=params) data = response.json()</p>
+<section id="accéder-aux-données-météo-à-partir-de-la-réponse-json" class="level1">
+<h1>Accéder aux données météo à partir de la réponse JSON</h1>
+<p>temperature = data[“main”][“temp”] humidite = data[“main”][“humidity”]</p>
+</section>
+<section id="utilisez-les-données-comme-bon-vous-semble" class="level1">
+<h1>Utilisez les données comme bon vous semble</h1>
+<p>print(“Température :”, temperature) print(“Humidité :”, humidite)</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
