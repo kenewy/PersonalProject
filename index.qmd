@@ -7,43 +7,50 @@ title: "Prévisions Météo"
 </head>
 
 <table id="myTable">
-    <tr>
+    <tr class="ligne-coloree1">
+        <td>Date</td>
         <td>Aujourd'hui</td>
         <td>Jour 2</td>
         <td>Jour 3</td>
         <td>Jour 4</td>
     </tr>
-    <tr>
+    <tr class="ligne-coloree2">
+        <td>Images</td>
         <td>Images</td>
         <td>Images</td>
         <td>Images</td>
         <td>Images</td>
     </tr>
-    <tr>
+    <tr class="ligne-coloree1">
+        <td>Température maximale</td>
         <td>Temp max</td>
         <td>Temp max</td>
         <td>Temp max</td>
         <td>Temp max</td>
     </tr>
-    <tr>
+    <tr class="ligne-coloree1">
+        <td>Température minimale</td>
         <td>Temp min</td>
         <td>Temp min</td>
         <td>Temp min</td>
         <td>Temp min</td>
     </tr>
-    <tr>
+    <tr class="ligne-coloree1">
+        <td>Vent</td>
         <td>Vent</td>
         <td>Vent</td>
         <td>Vent</td>
         <td>Vent</td>
     </tr>
-    <tr>
+    <tr class="ligne-coloree1">
+        <td>Précipitations</td>
         <td>Pluie</td>
         <td>Pluie</td>
         <td>Pluie</td>
         <td>Pluie</td>
     </tr>
-    <tr>
+    <tr class="ligne-coloree1">
+        <td>Prévisibilité</td>
         <td>Prévisibilité</td>
         <td>Prévisibilité</td>
         <td>Prévisibilité</td>
@@ -51,4 +58,10 @@ title: "Prévisions Météo"
     </tr>
 </table>
 
+
+
+
+url_current = https://open-meteo.com/en/docs/meteofrance-api#latitude=43.6109&longitude=3.8763&current=temperature_2m,precipitation,windspeed_10m&hourly=&timezone=Europe%2FBerlin
+
+url_daily = https://open-meteo.com/en/docs/meteofrance-api#latitude=43.6109&longitude=3.8763&current=&hourly=&daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&timezone=Europe%2FBerlin
 

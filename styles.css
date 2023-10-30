@@ -5,11 +5,6 @@ table {
     text-align: center;
 }
 
-/* Ajouter des bordures aux cellules du tableau */
-table, th, td {
-    border: 1px solid black;
-}
-
 /* Centrer le contenu du tableau sur la page */
 body {
     display: flex;
@@ -17,4 +12,11 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+}
+
+.ligne-coloree1 {
+    background-color: #ffefef; /* ou toute autre couleur de votre choix */
+}
+.ligne-coloree2 {
+    background-color: #38c7ff; /* ou toute autre couleur de votre choix */
 }
