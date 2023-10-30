@@ -1,0 +1,54 @@
+---
+title: "Prévisions Météo"
+---
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<table id="myTable">
+    <tr>
+        <td>Aujourd'hui</td>
+        <td>Jour 2</td>
+        <td>Jour 3</td>
+        <td>Jour 4</td>
+    </tr>
+    <tr>
+        <td>Images</td>
+        <td>Images</td>
+        <td>Images</td>
+        <td>Images</td>
+    </tr>
+    <tr>
+        <td>Temp max</td>
+        <td>Temp max</td>
+        <td>Temp max</td>
+        <td>Temp max</td>
+    </tr>
+    <tr>
+        <td>Temp min</td>
+        <td>Temp min</td>
+        <td>Temp min</td>
+        <td>Temp min</td>
+    </tr>
+    <tr>
+        <td>Vent</td>
+        <td>Vent</td>
+        <td>Vent</td>
+        <td>Vent</td>
+    </tr>
+    <tr>
+        <td>Pluie</td>
+        <td>Pluie</td>
+        <td>Pluie</td>
+        <td>Pluie</td>
+    </tr>
+    <tr>
+        <td>Prévisibilité</td>
+        <td>Prévisibilité</td>
+        <td>Prévisibilité</td>
+        <td>Prévisibilité</td>
+    </tr>
+</table>
+
+

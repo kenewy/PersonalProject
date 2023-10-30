@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - about.qmd
+website:
+  title: "Prévisions Météo"
+  page-navigation: true
+  repo-url: https://github.com/MaxenceLamure/PersonalProject
+  repo-actions: [source, issue]
+  
+  navbar:
+    tools: 
+      - icon: github
+        href: https://github.com/MaxenceLamure/PersonalProject
+        text: GitHub
+    left:
+      - href: index.qmd
+        text: Météo
+      - href: about.qmd
+        text: A propos
+      
+
+        
+execute:
+  echo: false          
+
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+jupyter: python3

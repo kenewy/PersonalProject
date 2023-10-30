@@ -1,0 +1,20 @@
+/* styles.css */
+
+/* Aligner le texte au centre dans toutes les cellules du tableau */
+table {
+    text-align: center;
+}
+
+/* Ajouter des bordures aux cellules du tableau */
+table, th, td {
+    border: 1px solid black;
+}
+
+/* Centrer le contenu du tableau sur la page */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
