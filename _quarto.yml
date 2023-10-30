@@ -5,7 +5,7 @@ project:
     - index.qmd
     - about.qmd
 website:
-  title: "Prévisions Météo"
+  title: "Météo"
   page-navigation: true
   repo-url: https://github.com/MaxenceLamure/PersonalProject
   repo-actions: [source, issue]
