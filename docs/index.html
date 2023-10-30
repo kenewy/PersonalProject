@@ -244,17 +244,26 @@ Prévisibilité
 </tr>
 
 </tbody></table>
-<p>import requests</p>
-<p>url = https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&amp;longitude=3.8763&amp;daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&amp;timezone=Europe%2FBerlin</p>
-<p>params = { “q”: “Nom_de_la_ville”, “appid”: “url” }</p>
-<p>response = requests.get(url, params=params) data = response.json()</p>
+<p>import pandas as pd import requests</p>
+<section id="url-de-lapi" class="level1">
+<h1>URL de l’API</h1>
+<p>url = “https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&amp;longitude=3.8763&amp;daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&amp;timezone=Europe%2FBerlin”</p>
+</section>
+<section id="envoi-de-la-requête-get-à-lapi" class="level1">
+<h1>Envoi de la requête GET à l’API</h1>
+<p>response = requests.get(url)</p>
+</section>
+<section id="vérification-du-statut-de-la-requête" class="level1">
+<h1>Vérification du statut de la requête</h1>
+<p>if response.status_code == 200: # Conversion des données JSON en un dictionnaire Python data = response.json() # Affichage des données récupérées print(data) else: # Affichage d’un message d’erreur si la requête échoue print(“Erreur lors de la récupération des données météorologiques.”)</p>
+</section>
 <section id="accéder-aux-données-météo-à-partir-de-la-réponse-json" class="level1">
 <h1>Accéder aux données météo à partir de la réponse JSON</h1>
-<p>temperature = data[“main”][“temp”] humidite = data[“main”][“humidity”]</p>
+<p>temperature_max = data[“daily”][“temperature_2m_max”] temperature_min = data[“daily”][“temperature_2m_min”]</p>
 </section>
 <section id="utilisez-les-données-comme-bon-vous-semble" class="level1">
 <h1>Utilisez les données comme bon vous semble</h1>
-<p>print(“Température :”, temperature) print(“Humidité :”, humidite)</p>
+<p>print(“temperature_max :”, temperature_max) print(“temperature_min :”, temperature_min)</p>
 
 
 </section>
