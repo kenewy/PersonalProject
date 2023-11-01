@@ -3,6 +3,7 @@ project:
   output-dir: docs
   render:
     - index.qmd
+
 website:
   title: "Météo"
   page-navigation: true
@@ -16,13 +17,10 @@ website:
         text: GitHub
     left:
       - href: index.qmd
-        text: Météo
-      
-
-        
+        text: Météo à Montpellier
+         
 execute:
-  echo: false          
-
+  echo: false  
 
 format:
   html:

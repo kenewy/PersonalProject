@@ -2,7 +2,6 @@
 title: "Prévisions Météo"
 ---
 
-
 ```{python}
 import pandas as pd
 import requests
@@ -17,23 +16,23 @@ response = requests.get(url)
 if response.status_code == 200:
     # Conversion des données JSON en un dictionnaire Python
     data = response.json()
-    # Affichage des données récupérées
-    print(data)
+    # Accéder aux données météo à partir de la réponse JSON
+    jour = data["daily"]["time"]
+    # date = jour[""]
+    wmo = data["daily"]["weathercode"]
+    temperature_max = data["daily"]["temperature_2m_max"]
+    temperature_min = data["daily"]["temperature_2m_min"]
+    vent = data["daily"]["windspeed_10m_max"]
+    precipitations = data["daily"]["precipitation_sum"]
+    precipitations_duree = data["daily"]["precipitation_hours"]
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
 
 
-# Accéder aux données météo à partir de la réponse JSON
-wmo = data["daily"]["weathercode"]
-temperature_max = data["daily"]["temperature_2m_max"]
-temperature_min = data["daily"]["temperature_2m_min"]
-vent = data["daily"]["windspeed_10m_max"]
-precipitations = data["daily"]["precipitation_sum"]
-precipitations_duree = data["daily"]["precipitation_hours"]
-
 # Afficher les données
 print(data)
+print("date : ", jour)
 print("wmo : ", wmo)
 print("temperature max : ", temperature_max)
 print("temperature min : ", temperature_min)
@@ -42,6 +41,31 @@ print("precipitations : ", precipitations)
 print("temps precipitations : ", precipitations_duree)
 ```
 
+```{python}
+from datetime import datetime
+
+# Liste de dates
+dates = ['2023-11-01', '2023-11-02', '2023-11-03', '2023-11-04']
+
+# Fonction pour formater les dates
+def formater_date(date):
+    # Convertir la chaîne de date en objet datetime
+    date_obj = datetime.strptime(date, '%Y-%m-%d')
+    # Formater la date en "jour/mois"
+    date_formatee = date_obj.strftime('%d/%m')
+    return date_formatee
+
+# Utiliser la fonction pour formater les dates dans la liste
+dates_formatees = [formater_date(date) for date in dates]
+
+# Afficher les dates formatees
+print(dates_formatees)
+```
+
+```{python}
+from IPython.display import HTML
+
+html_code = """
 <head>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -97,3 +121,7 @@ print("temps precipitations : ", precipitations_duree)
         <td>Prévisibilité</td>
     </tr>
 </table>
+"""
+
+display(HTML(html_code))
+```
