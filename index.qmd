@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 
 # URL de l'API
-url = "https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&daily=temperature_2m_max,temperature_2m_min,precipitation_hours,windspeed_10m_max&timezone=Europe%2FBerlin"
+url = "https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_hours,precipitation_probability_max,windspeed_10m_max&timezone=Europe%2FBerlin"
 
 # Envoi de la requête GET à l'API
 response = requests.get(url)
@@ -25,12 +25,21 @@ else:
 
 
 # Accéder aux données météo à partir de la réponse JSON
+wmo = data["daily"]["weathercode"]
 temperature_max = data["daily"]["temperature_2m_max"]
 temperature_min = data["daily"]["temperature_2m_min"]
+vent = data["daily"]["windspeed_10m_max"]
+precipitations = data["daily"]["precipitation_sum"]
+precipitations_duree = data["daily"]["precipitation_hours"]
 
-# Utilisez les données comme bon vous semble
-print("temperature_max : ", temperature_max)
-print("temperature_min : ", temperature_min)
+# Afficher les données
+print(data)
+print("wmo : ", wmo)
+print("temperature max : ", temperature_max)
+print("temperature min : ", temperature_min)
+print("vent max : ", vent)
+print("precipitations : ", precipitations)
+print("temps precipitations : ", precipitations_duree)
 ```
 
 <head>
