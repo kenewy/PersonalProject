@@ -1,0 +1,114 @@
+{
+	"0":{
+		"nom":"Clear Sky",
+		"url":"http://openweathermap.org/img/wn/01d@2x.png"
+	},
+	"1":{
+		"nom":"Mainly Clear",
+		"url":"http://openweathermap.org/img/wn/01d@2x.png"
+	},
+	"2":{
+		"nom":"Partly Cloudy",
+		"url":"http://openweathermap.org/img/wn/02d@2x.png"
+	},
+	"3":{
+		"nom":"Overcast",
+		"url":"http://openweathermap.org/img/wn/03d@2x.png"
+	},
+	"45":{
+		"nom":"Fog",
+		"url":"http://openweathermap.org/img/wn/50d@2x.png"
+	},
+	"48":{
+		"nom":"Depositing Rime Fog",
+		"url":"http://openweathermap.org/img/wn/50d@2x.png"
+	},
+	"51":{
+		"nom":"Light Drizzle",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"53":{
+		"nom":"Moderate Drizzle",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"55":{
+		"nom":"Dense Drizzle",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"56":{
+		"nom":"Light Freezing Drizzle",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"57":{
+		"nom":"Dense Freezing Drizzle",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"61":{
+		"nom":"Slight Rain",
+		"url":"http://openweathermap.org/img/wn/10d@2x.png"
+	},
+	"63":{
+		"nom":"Moderate Rain",
+		"url":"http://openweathermap.org/img/wn/10d@2x.png"
+	},
+	"65":{
+		"nom":"Heavy Rain",
+		"url":"http://openweathermap.org/img/wn/10d@2x.png"
+	},
+	"66":{
+		"nom":"Light Freezing Rain",
+		"url":"http://openweathermap.org/img/wn/10d@2x.png"
+	},
+	"67":{
+		"nom":"Heavy Freezing Rain",
+		"url":"http://openweathermap.org/img/wn/10d@2x.png"
+	},
+	"71":{
+		"nom":"Slight Snow Fall",
+		"url":"http://openweathermap.org/img/wn/13d@2x.png"
+	},
+	"73":{
+		"nom":"Moderate Snow Fall",
+		"url":"http://openweathermap.org/img/wn/13d@2x.png"
+	},
+	"75":{
+		"nom":"Heavy Snow Fall",
+		"url":"http://openweathermap.org/img/wn/13d@2x.png"
+	},
+	"77":{
+		"nom":"Snow Grains",
+		"url":"http://openweathermap.org/img/wn/13d@2x.png"
+	},
+	"80":{
+		"nom":"Slight Rain Showers",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"81":{
+		"nom":"Moderate Rain Showers",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"82":{
+		"nom":"Violent Rain Showers",
+		"url":"http://openweathermap.org/img/wn/09d@2x.png"
+	},
+	"85":{
+		"nom":"SLight Snow Showers",
+		"url":"http://openweathermap.org/img/wn/13d@2x.png"
+	},
+	"86":{
+		"nom":"Heavy Snow Showers",
+		"url":"http://openweathermap.org/img/wn/13d@2x.png"
+	},
+	"95":{
+		"nom":"Slight or Moderate Thunderstorm",
+		"url":"http://openweathermap.org/img/wn/11d@2x.png"
+	},
+	"96":{
+		"nom":"Thunderstorms With Slight Hail",
+		"url":"http://openweathermap.org/img/wn/11d@2x.png"
+	},
+	"99":{
+		"nom":"Thunderstorm With Heavy Hail",
+		"url":"http://openweathermap.org/img/wn/11d@2x.png"
+	}
+}
