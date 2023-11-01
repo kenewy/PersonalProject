@@ -3,11 +3,14 @@ title: "Prévisions Météo"
 ---
 
 ```{python}
+"""
+API
+"""
 import pandas as pd
 import requests
 
 # URL de l'API
-url = "https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_hours,precipitation_probability_max,windspeed_10m_max&timezone=Europe%2FBerlin"
+url = "https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,winddirection_10m_dominant&timezone=Europe%2FBerlin"
 
 # Envoi de la requête GET à l'API
 response = requests.get(url)
@@ -23,26 +26,26 @@ if response.status_code == 200:
     temperature_max = data["daily"]["temperature_2m_max"]
     temperature_min = data["daily"]["temperature_2m_min"]
     vent = data["daily"]["windspeed_10m_max"]
+    direction_vent = data["daily"]["winddirection_10m_dominant"]
     precipitations = data["daily"]["precipitation_sum"]
-    precipitations_duree = data["daily"]["precipitation_hours"]
+    # Valeurs arrondies à l'unité
+    temperature_max_maj = [round(temp) for temp in temperature_max]
+    temperature_min_min = [round(temp) for temp in temperature_min]
+    vent_arr = [round(temp) for temp in vent]
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
-
-
-# Afficher les données
-print(data)
-print("date : ", jour)
-print("wmo : ", wmo)
-print("temperature max : ", temperature_max)
-print("temperature min : ", temperature_min)
-print("vent max : ", vent)
-print("precipitations : ", precipitations)
-print("temps precipitations : ", precipitations_duree)
 ```
 
 ```{python}
+"""
+Dates
+"""
 from datetime import datetime
+import locale
+
+# Définir la locale en français
+locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
 
 # Liste de dates
 dates = ['2023-11-01', '2023-11-02', '2023-11-03', '2023-11-04']
@@ -51,77 +54,109 @@ dates = ['2023-11-01', '2023-11-02', '2023-11-03', '2023-11-04']
 def formater_date(date):
     # Convertir la chaîne de date en objet datetime
     date_obj = datetime.strptime(date, '%Y-%m-%d')
+    # Formater l'abréviation du jour en minuscules et sans point à la fin
+    nom_jour_abrege = date_obj.strftime('%a').lower().rstrip('.')
+    # Mettre en majuscule la première lettre de l'abréviation du jour
+    nom_jour_abrege = nom_jour_abrege.capitalize()
     # Formater la date en "jour/mois"
-    date_formatee = date_obj.strftime('%d/%m')
-    return date_formatee
+    jour_mois = date_obj.strftime('%d/%m')
+    return nom_jour_abrege, jour_mois
 
 # Utiliser la fonction pour formater les dates dans la liste
-dates_formatees = [formater_date(date) for date in dates]
-
-# Afficher les dates formatees
-print(dates_formatees)
+noms_jours, dates_formatees = zip(*[formater_date(date) for date in dates])
 ```
 
 ```{python}
-from IPython.display import HTML
+"""
+WMO
+"""
+import json
 
-html_code = """
+# Charger le fichier JSON dans un dictionnaire
+with open('images.json', 'r') as json_file:
+    data = json.load(json_file)
+
+# La variable wmo contient les numéros WMO
+wmo = [3, 51, 3, 51]
+
+# Créer un dictionnaire de correspondance entre les numéros WMO et les noms et URL du fichier JSON
+correspondance_wmo = {str(key): value for key, value in data.items()}
+
+# Récupérer les URLs et les noms à partir des numéros WMO
+noms_urls = []
+for numero in wmo:
+    if str(numero) in correspondance_wmo:
+        info = correspondance_wmo[str(numero)]
+        nom = info['nom']
+        url = info['url']
+        noms_urls.append({'nom': nom, 'url': url})
+    else:
+        noms_urls.append({'nom': '', 'url': ''})  # Valeurs par défaut si le numéro WMO n'est pas trouvé
+
+```
+
+```{python}
+"""
+Tableau
+"""
+from IPython.display import display, HTML
+
+html_code = f"""
 <head>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <table id="myTable">
     <tr class="ligne-coloree1">
-        <td>Date</td>
-        <td>Aujourd'hui</td>
-        <td>Jour 2</td>
-        <td>Jour 3</td>
-        <td>Jour 4</td>
+        <th>Date</th>
+        <th class="cellule premiere-cellule"><strong>{noms_jours[0]}</strong><br>Aujourd'hui</th>
+        <th><strong>{noms_jours[1]}</strong><br>Demain</th>
+        <th><strong>{noms_jours[2]}</strong><br>{dates_formatees[2]}</th>
+        <th><strong>{noms_jours[3]}</strong><br>{dates_formatees[3]}</th>
     </tr>
     <tr class="ligne-coloree2">
-        <td>Images</td>
-        <td>Images</td>
-        <td>Images</td>
-        <td>Images</td>
-        <td>Images</td>
+        <th>Image</th>
+        <th class="cellule premiere-cellule"><img src ="{noms_urls[0]['url']}"></a><br>
+        {noms_urls[0]['nom']}</th>
+        <th><img src ="{noms_urls[1]['url']}"></a><br>
+        {noms_urls[1]['nom']}</th>
+        <th><img src ="{noms_urls[2]['url']}"></a><br>
+        {noms_urls[2]['nom']}</th>
+        <th><img src ="{noms_urls[3]['url']}"></a><br>
+        {noms_urls[3]['nom']}</th>
     </tr>
     <tr class="ligne-coloree1">
-        <td>Température maximale</td>
-        <td>Temp max</td>
-        <td>Temp max</td>
-        <td>Temp max</td>
-        <td>Temp max</td>
+        <th>Température maximale</th>
+        <th class="cellule premiere-cellule">{temperature_max_maj[0]} °C</th>
+        <th>{temperature_max_maj[1]} °C</th>
+        <th>{temperature_max_maj[2]} °C</th>
+        <th>{temperature_max_maj[3]} °C</th>
     </tr>
     <tr class="ligne-coloree1">
-        <td>Température minimale</td>
-        <td>Temp min</td>
-        <td>Temp min</td>
-        <td>Temp min</td>
-        <td>Temp min</td>
+        <th>Température minimale</th>
+        <th class="cellule premiere-cellule">{temperature_min_min[0]} °C</th>
+        <th>{temperature_min_min[1]} °C</th>
+        <th>{temperature_min_min[2]} °C</th>
+        <th>{temperature_min_min[3]} °C</th>
     </tr>
     <tr class="ligne-coloree1">
-        <td>Vent</td>
-        <td>Vent</td>
-        <td>Vent</td>
-        <td>Vent</td>
-        <td>Vent</td>
+        <th>Vitesse du vent maximale</th>
+        <th class="cellule premiere-cellule">{vent_arr[0]} km/h</th>
+        <th>{vent_arr[1]} km/h</th>
+        <th>{vent_arr[2]} km/h</th>
+        <th>{vent_arr[3]} km/h</th>
     </tr>
     <tr class="ligne-coloree1">
-        <td>Précipitations</td>
-        <td>Pluie</td>
-        <td>Pluie</td>
-        <td>Pluie</td>
-        <td>Pluie</td>
-    </tr>
-    <tr class="ligne-coloree1">
-        <td>Prévisibilité</td>
-        <td>Prévisibilité</td>
-        <td>Prévisibilité</td>
-        <td>Prévisibilité</td>
-        <td>Prévisibilité</td>
+        <th>Précipitations</th>
+        <th class="cellule premiere-cellule">{precipitations[0]} mm</th>
+        <th>{precipitations[1]} mm</th>
+        <th>{precipitations[2]} mm</th>
+        <th>{precipitations[3]} mm</th>
     </tr>
 </table>
 """
 
 display(HTML(html_code))
 ```
+
+

@@ -20,3 +20,35 @@ body {
 .ligne-coloree2 {
     background-color: #38c7ff; /* ou toute autre couleur de votre choix */
 }
+
+.cellule {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ffffff; /* Bordure blanche pour toutes les cellules */
+}
+.premiere-cellule {
+    border: 1px solid #ff9900; /* Bordure orange pour la première cellule */
+}
+.bulle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: #ffffff;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.dark-mode {
+    background-color: #1f1f1f; /* Fond sombre */
+    color: #ffffff; /* Texte en blanc */
+    /* Autres styles sombres */
+}
