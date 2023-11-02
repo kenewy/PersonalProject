@@ -25,23 +25,23 @@
 	},
 	"51":{
 		"nom":"Légère bruine",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/31_day.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
 	},
 	"53":{
 		"nom":"Bruine",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/05_iday.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
 	},
 	"55":{
 		"nom":"Forte bruine",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/05_iday.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
 	},
 	"56":{
 		"nom":"Légère bruine verglaçante",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/05_iday.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
 	},
 	"57":{
 		"nom":"Forte bruine verglaçante",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/05_iday.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
 	},
 	"61":{
 		"nom":"Couvert avec pluie légère",
@@ -57,11 +57,11 @@
 	},
 	"66":{
 		"nom":"Couvert avec pluie verglaçante",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/35_day.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/23_day.png"
 	},
 	"67":{
 		"nom":"Couvert avec fortes pluies verglaçantes",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/35_day.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/25_day_nimbostratus_2.png"
 	},
 	"71":{
 		"nom":"Couvert avec neige légère",
@@ -77,15 +77,15 @@
 	},
 	"77":{
 		"nom":"Chutes de neiges éparses",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/17_iday.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/10_iday.png"
 	},
 	"80":{
 		"nom":"Risques de légères averses",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/16_iday.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/07_iday_cumulus_1.png"
 	},
 	"81":{
 		"nom":"Risques d'averses",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/14_iday.png"
+		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/16_iday.png"
 	},
 	"82":{
 		"nom":"Risques de fortes averses",
