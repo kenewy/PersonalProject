@@ -72,10 +72,8 @@ def formater_date(date):
 
 # Utiliser la fonction pour formater les dates dans la liste
 noms_jours, dates_formatees = zip(*[formater_date(date) for date in jour])
-```
 
 
-```{python}
 """
 Icônes WMO
 """
@@ -95,14 +93,12 @@ for numero in wmo:
         info = correspondance_wmo[str(numero)]
         nom = info['nom']
         url = info['url']
-        noms_urls.append({'nom': nom, 'url': url})
+        urln = info['urln']
+        noms_urls.append({'nom': nom, 'url': url, 'urln': urln})
     else:
-        noms_urls.append({'nom': '', 'url': ''})  # Valeurs par défaut si le numéro WMO n'est pas trouvé
-
-```
+        noms_urls.append({'nom': '', 'url': '', 'urln': ''})  # Valeurs par défaut si le numéro WMO n'est pas trouvé
 
 
-```{python}
 """
 Couleurs températures
 """
@@ -139,6 +135,7 @@ html_code = f"""
 </head>
 
 <table id="myTable" title="Date">
+    <!-- Ligne 1 -->
     <tr class="couleur1">
         <th style="background-color: white;" class="bordure2 bordure top">
             <strong>
@@ -166,25 +163,30 @@ html_code = f"""
         </th>
     </tr>
 
+    <!-- Ligne 2 -->
     <tr class="couleur2" title="Temps">
         <th title="{noms_urls[0]['nom']}" class="bordure2 bordure">
-            <img src ="{noms_urls[0]['url']}"></a>
+            <img class="day-image" src ="{noms_urls[0]['url']}">
+            <img class="circular-image" src ="{noms_urls[0]['urln']}">
             <br>{noms_urls[0]['nom']}
         </th>
         <th title="{noms_urls[1]['nom']}">
-            <img src ="{noms_urls[1]['url']}"></a>
+            <img class="day-image" src ="{noms_urls[1]['url']}">
+            <img class="circular-image" src ="{noms_urls[1]['urln']}">
             <br>{noms_urls[1]['nom']}
         </th>
         <th title="{noms_urls[2]['nom']}">
-            <img src ="{noms_urls[2]['url']}"></a>
+            <img class="day-image" src ="{noms_urls[2]['url']}">
+            <img class="circular-image" src ="{noms_urls[2]['urln']}">
             <br>{noms_urls[2]['nom']}
         </th>
         <th title="{noms_urls[3]['nom']}">
-            <img src ="{noms_urls[3]['url']}"></a>
+            <img src ="{noms_urls[3]['url']}">
             <br>{noms_urls[3]['nom']}
         </th>
     </tr>
 
+    <!-- Ligne 3 -->
     <tr class="couleur1" title="Températures minimale - maximale">
         <th style="background-color: white;" class="bordure2 bordure">
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[0])};">
@@ -208,6 +210,7 @@ html_code = f"""
         </th>
     </tr>
 
+    <!-- Ligne 4 -->
     <tr class="couleur1" title="Vitesse du vent maximale">
         <th style="background-color: white;" class="bordure2 bordure">
             <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[0]}deg); display: inline-block; margin: 0 auto;">
@@ -239,26 +242,23 @@ html_code = f"""
         </th>
     </tr>
     
+    <!-- Ligne 5 -->
     <tr class="couleur1" title="Quantité de précipitations">
         <th style="background-color: white;" class="bordure2 bordure bottom">
             <img src ="images_svg/Water_Drop.svg"> 
                 {precipitations[0]} mm
-            </a>
         </th>
         <th>
             <img src ="images_svg/Water_Drop.svg"> 
                 {precipitations[1]} mm
-            </a>
         </th>
         <th>
             <img src ="images_svg/Water_Drop.svg"> 
                 {precipitations[2]} mm
-            </a>
         </th>
         <th>
             <img src ="images_svg/Water_Drop.svg"> 
                 {precipitations[3]} mm
-            </a>
         </th>
     </tr>
 </table>
@@ -267,14 +267,15 @@ html_code = f"""
 display(HTML(html_code))
 ```
 
-Météo de Montpellier pour les 4 prochains jours, aujourd'hui compris, affichant pour chaque journée (colonne):
+Météo de Montpellier pour les 4 prochains jours, aujourd'hui compris, affichant respectivement pour chaque journée (colonne):
 <ol>
     <li>la date,</li>
-    <li>l'icône WMO (World Meteorological Organization) provenant du site meteoblue.com en format svg avec la description correspondante,</li>
+    <li>le pictogramme WMO (World Meteorological Organization) provenant du site meteoblue.com en format svg avec la description correspondante,</li>
     <li>les températures minimale et maximale en valeurs entières en degrés Celsius,</li>
-    <li>la vitesse du vent maximale en valeur entière en kilomètres par heure (seule donnée disponible) et sa direction cardinale par une flèche,</li>
+    <li>la vitesse du vent maximale en valeur entière en kilomètres par heure (seule donnée disponible) et sa direction cardinale représentée par une flèche,</li>
     <li>la quantité de précipitations en milimètres.</li>
 </ol>
+De plus, un pictogramme WMO de nuit apparaît entre chaque jour et affiche le temps de la journée précédente.
 
 Ces descriptions sont affichées en survolant les cellules avec le curseur.
 

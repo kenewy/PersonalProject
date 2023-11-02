@@ -1,8 +1,8 @@
 {
-	"0":{ /* code wmo */
-		"nom":"Clair, ciel sans nuage", /* Description temps */
-		"url":"images_svg/0.svg", /* Version jour */
-		"urln":"images_svg/0n.svg" /* Version nuit */
+	"0":{
+		"nom":"Clair, ciel sans nuage",
+		"url":"images_svg/0.svg",
+		"urln":"images_svg/0n.svg"
 	},
 	"1":{
 		"nom":"Clair avec quelques nuages bas",
@@ -41,8 +41,8 @@
 	},
 	"55":{
 		"nom":"Forte bruine",
-		"url":"images_svg/61.svg",
-		"urln":"images_svg/61n.svg"
+		"url":"images_svg/63.svg",
+		"urln":"images_svg/63n.svg"
 	},
 	"56":{
 		"nom":"Légère bruine verglaçante",
@@ -51,8 +51,8 @@
 	},
 	"57":{
 		"nom":"Forte bruine verglaçante",
-		"url":"images_svg/61.svg",
-		"urln":"images_svg/61n.svg"
+		"url":"images_svg/63.svg",
+		"urln":"images_svg/63n.svg"
 	},
 	"61":{
 		"nom":"Couvert avec pluie légère",
