@@ -1,54 +1,46 @@
 /* styles.css */
 
-/* Aligner le texte au centre dans toutes les cellules du tableau */
-table {
-    text-align: center;
-}
-
-/* Centrer le contenu du tableau sur la page */
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.ligne-coloree1 {
-    background-color: #ffefef; /* ou toute autre couleur de votre choix */
-}
-.ligne-coloree2 {
-    background-color: #38c7ff; /* ou toute autre couleur de votre choix */
-}
-
-.cellule {
+table td {
     position: relative;
     width: 50px;
     height: 50px;
     text-align: center;
     vertical-align: middle;
-    border: 1px solid #ffffff; /* Bordure blanche pour toutes les cellules */
-}
-.premiere-cellule {
-    border: 1px solid #ff9900; /* Bordure orange pour la première cellule */
-}
-.bulle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #3498db;
-    color: #ffffff;
-    text-align: center;
-    line-height: 30px;
-    font-weight: bold;
 }
 
-.dark-mode {
-    background-color: #1f1f1f; /* Fond sombre */
-    color: #ffffff; /* Texte en blanc */
-    /* Autres styles sombres */
+.couleur1 {
+    background-color: #f7fff1; /* ou toute autre couleur de votre choix */
+}
+.couleur2 {
+    background-color: #6fd6ff; /* ou toute autre couleur de votre choix */
+}
+
+.bordure {
+    border: 1px solid #ffffff; /* Bordure blanche pour toutes les cellules */
+}
+
+th:nth-child(1), td:nth-child(1) {
+    border-left: 3px solid #ff7b00; /* Bordure de la deuxième colonne (épaisseur 4px, couleur rouge) */
+    border-right: 3px solid #ff7b00; /* Bordure de la deuxième colonne (épaisseur 4px, couleur rouge) */
+    
+}
+.top {
+    border-top: 3px solid #ff7b00; /* Bordure supérieure de la cellule spéciale (épaisseur 4px, couleur rouge) */
+}
+.bottom {
+    border-bottom: 3px solid #ff7b00; /* Bordure supérieure de la cellule spéciale (épaisseur 4px, couleur rouge) */
+}
+
+.mini-case {
+    position: absolute;
+    top: 10px; /* Ajustez la distance par rapport à la cellule */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 30px;
+    border-radius: 10%;
+    background-color: #91ff00;
+    color: #000000;
+    text-align: center;
+    line-height: 30px;
 }

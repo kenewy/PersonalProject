@@ -97,6 +97,35 @@ for numero in wmo:
 
 ```{python}
 """
+Couleurs températures
+"""
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Définir les températures minimale et maximale
+min_temp = -15
+max_temp = 70
+
+# Créer une échelle de couleurs basée sur les températures
+cmap = plt.cm.YlOrBr
+norm = mcolors.Normalize(vmin=min_temp, vmax=max_temp)
+scalarmap = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+scalarmap.set_array([])  # Permet de normaliser les valeurs
+
+# Fonction pour convertir la température en couleur hexadécimale
+def temperature_to_color(temperature):
+    color = scalarmap.to_rgba(temperature)
+    return mcolors.to_hex(color, keep_alpha=False)
+
+# Exemple d'utilisation
+temperature = 20
+couleur_hex = temperature_to_color(temperature)
+print(couleur_hex)  # Affiche la couleur hexadécimale correspondant à la température
+```
+
+```{python}
+"""
 Tableau
 """
 from IPython.display import display, HTML
@@ -107,51 +136,50 @@ html_code = f"""
 </head>
 
 <table id="myTable">
-    <tr class="ligne-coloree1">
-        <th>Date</th>
-        <th class="cellule premiere-cellule"><strong>{noms_jours[0]}</strong><br>Aujourd'hui</th>
-        <th><strong>{noms_jours[1]}</strong><br>Demain</th>
-        <th><strong>{noms_jours[2]}</strong><br>{dates_formatees[2]}</th>
-        <th><strong>{noms_jours[3]}</strong><br>{dates_formatees[3]}</th>
+    <tr class="couleur1">
+        <th title="Date" class="bordure2 bordure top"><strong>{noms_jours[0]}</strong><br>Aujourd'hui</th>
+        <th title="Date"><strong>{noms_jours[1]}</strong><br>Demain</th>
+        <th title="Date"><strong>{noms_jours[2]}</strong><br>{dates_formatees[2]}</th>
+        <th title="Date"><strong>{noms_jours[3]}</strong><br>{dates_formatees[3]}</th>
     </tr>
-    <tr class="ligne-coloree2">
-        <th>Image</th>
-        <th class="cellule premiere-cellule"><img src ="{noms_urls[0]['url']}"></a><br>
+
+    <tr class="couleur2">
+        <th title="Icône WMO" class="bordure2 bordure"><img src ="{noms_urls[0]['url']}"></a><br>
         {noms_urls[0]['nom']}</th>
-        <th><img src ="{noms_urls[1]['url']}"></a><br>
+        <th title="Icône WMO"><img src ="{noms_urls[1]['url']}"></a><br>
         {noms_urls[1]['nom']}</th>
-        <th><img src ="{noms_urls[2]['url']}"></a><br>
+        <th title="Icône WMO"><img src ="{noms_urls[2]['url']}"></a><br>
         {noms_urls[2]['nom']}</th>
-        <th><img src ="{noms_urls[3]['url']}"></a><br>
+        <th title="Icône WMO"><img src ="{noms_urls[3]['url']}"></a><br>
         {noms_urls[3]['nom']}</th>
     </tr>
-    <tr class="ligne-coloree1">
-        <th>Température maximale</th>
-        <th class="cellule premiere-cellule">{temperature_max_maj[0]} °C</th>
-        <th>{temperature_max_maj[1]} °C</th>
-        <th>{temperature_max_maj[2]} °C</th>
-        <th>{temperature_max_maj[3]} °C</th>
+
+    <tr class="couleur1">
+        <th title="Température maximale" class="bordure2 bordure"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[0])};">{temperature_max_maj[0]} °C</div></th>
+        <th title="Température maximale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[1])};">{temperature_max_maj[1]} °C</div></th>
+        <th title="Température maximale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[2])};">{temperature_max_maj[2]} °C</div></th>
+        <th title="Température maximale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[3])};">{temperature_max_maj[3]} °C</div></th>
     </tr>
-    <tr class="ligne-coloree1">
-        <th>Température minimale</th>
-        <th class="cellule premiere-cellule">{temperature_min_min[0]} °C</th>
-        <th>{temperature_min_min[1]} °C</th>
-        <th>{temperature_min_min[2]} °C</th>
-        <th>{temperature_min_min[3]} °C</th>
+
+    <tr class="couleur1">
+        <th title="Température minimale" class="bordure2 bordure"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[0])};">{temperature_min_min[0]} °C</div></th>
+        <th title="Température minimale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[1])};">{temperature_min_min[1]} °C</div></th>
+        <th title="Température minimale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[2])};">{temperature_min_min[2]} °C</div></th>
+        <th title="Température minimale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[3])};">{temperature_min_min[3]} °C</div></th>
     </tr>
-    <tr class="ligne-coloree1">
-        <th>Vitesse du vent maximale</th>
-        <th class="cellule premiere-cellule">{vent_arr[0]} km/h</th>
-        <th>{vent_arr[1]} km/h</th>
-        <th>{vent_arr[2]} km/h</th>
-        <th>{vent_arr[3]} km/h</th>
+
+    <tr class="couleur1">
+        <th title="Vitesse du vent maximale" class="bordure2 bordure">{vent_arr[0]} km/h</th>
+        <th title="Vitesse du vent maximale">{vent_arr[1]} km/h</th>
+        <th title="Vitesse du vent maximale">{vent_arr[2]} km/h</th>
+        <th title="Vitesse du vent maximale">{vent_arr[3]} km/h</th>
     </tr>
-    <tr class="ligne-coloree1">
-        <th>Précipitations</th>
-        <th class="cellule premiere-cellule">{precipitations[0]} mm</th>
-        <th>{precipitations[1]} mm</th>
-        <th>{precipitations[2]} mm</th>
-        <th>{precipitations[3]} mm</th>
+    
+    <tr class="couleur1">
+        <th title="Quantité de précipitations" class="bordure2 bordure bottom">{precipitations[0]} mm</th>
+        <th title="Quantité de précipitations">{precipitations[1]} mm</th>
+        <th title="Quantité de précipitations">{precipitations[2]} mm</th>
+        <th title="Quantité de précipitations">{precipitations[3]} mm</th>
     </tr>
 </table>
 """
