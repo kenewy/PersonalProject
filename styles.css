@@ -60,7 +60,7 @@ th:nth-child(1), td:nth-child(1) {
 
 /* Positionnement case nuit */
 .circular-image {
-    transform: translate(185%, -60%);
+    transform: translate(185%, -40%);
     width: 40px;
     height: 40px;
     border-radius: 20%;
