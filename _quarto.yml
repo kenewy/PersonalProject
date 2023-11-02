@@ -17,7 +17,7 @@ website:
         text: GitHub
     left:
       - href: index.qmd
-        text: Météo à Montpellier
+        text: Accueil
          
 execute:
   echo: false  

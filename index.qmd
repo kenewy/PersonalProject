@@ -1,5 +1,6 @@
 ---
-title: "Prévisions Météo"
+title: "Météo Montpellier"
+subtitle: "Occitanie, France, 43.61°N 3.88°E, 55m s.n.m.-"
 ---
 
 ```{python}
@@ -27,10 +28,17 @@ if response.status_code == 200:
     vent = data["daily"]["windspeed_10m_max"]
     direction_vent = data["daily"]["winddirection_10m_dominant"]
     precipitations = data["daily"]["precipitation_sum"]
-    # Valeurs arrondies à l'unité
-    temperature_max_maj = [round(temp) for temp in temperature_max]
-    temperature_min_min = [round(temp) for temp in temperature_min]
-    vent_arr = [round(temp) for temp in vent]
+
+    # Valeurs arrondies à l'unité et remplacer les valeurs manquantes par "-"
+    temperature_max_maj = [round(temp) if not pd.isna(temp) else "-" for temp in temperature_max]
+    temperature_min_min = [round(temp) if not pd.isna(temp) else "-" for temp in temperature_min]
+    vent_arr = [round(temp) if not pd.isna(temp) else "-" for temp in vent]
+    # Remplacer les valeurs manquantes par "-" pour les autres variables
+    jour = [date if not pd.isna(date) else "-" for date in jour]
+    wmo = [code if not pd.isna(code) else "-" for code in wmo]
+    direction_vent = [direction if not pd.isna(direction) else "-" for direction in direction_vent]
+    precipitations = [precipitation if not pd.isna(precipitation) else "-" for precipitation in precipitations]
+
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
@@ -123,51 +131,51 @@ html_code = f"""
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<table id="myTable">
+<table id="myTable" title="Date">
     <tr class="couleur1">
-        <th title="Date" class="bordure2 bordure top"><strong>{noms_jours[0]}</strong><br>Aujourd'hui</th>
-        <th title="Date"><strong>{noms_jours[1]}</strong><br>Demain</th>
-        <th title="Date"><strong>{noms_jours[2]}</strong><br>{dates_formatees[2]}</th>
-        <th title="Date"><strong>{noms_jours[3]}</strong><br>{dates_formatees[3]}</th>
+        <th style="background-color: white;" class="bordure2 bordure top"><strong>{noms_jours[0]}</strong><br>Aujourd'hui</th>
+        <th><strong>{noms_jours[1]}</strong><br>Demain</th>
+        <th><strong>{noms_jours[2]}</strong><br>{dates_formatees[2]}</th>
+        <th><strong>{noms_jours[3]}</strong><br>{dates_formatees[3]}</th>
     </tr>
 
-    <tr class="couleur2">
-        <th title="Icône WMO" class="bordure2 bordure"><img src ="{noms_urls[0]['url']}"></a><br>
+    <tr class="couleur2" title="Temps">
+        <th class="bordure2 bordure"><img src ="{noms_urls[0]['url']}"></a><br>
         {noms_urls[0]['nom']}</th>
-        <th title="Icône WMO"><img src ="{noms_urls[1]['url']}"></a><br>
+        <th><img src ="{noms_urls[1]['url']}"></a><br>
         {noms_urls[1]['nom']}</th>
-        <th title="Icône WMO"><img src ="{noms_urls[2]['url']}"></a><br>
+        <th><img src ="{noms_urls[2]['url']}"></a><br>
         {noms_urls[2]['nom']}</th>
-        <th title="Icône WMO"><img src ="{noms_urls[3]['url']}"></a><br>
+        <th><img src ="{noms_urls[3]['url']}"></a><br>
         {noms_urls[3]['nom']}</th>
     </tr>
 
-    <tr class="couleur1">
-        <th title="Température maximale" class="bordure2 bordure"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[0])};">{temperature_max_maj[0]} °C</div></th>
-        <th title="Température maximale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[1])};">{temperature_max_maj[1]} °C</div></th>
-        <th title="Température maximale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[2])};">{temperature_max_maj[2]} °C</div></th>
-        <th title="Température maximale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[3])};">{temperature_max_maj[3]} °C</div></th>
+    <tr class="couleur1" title="Température maximale">
+        <th style="background-color: white;" class="bordure2 bordure"><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[0])};">{temperature_max_maj[0]} °C</div></th>
+        <th><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[1])};">{temperature_max_maj[1]} °C</div></th>
+        <th><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[2])};">{temperature_max_maj[2]} °C</div></th>
+        <th><div class="mini-case" style="background-color: {temperature_to_color(temperature_max_maj[3])};">{temperature_max_maj[3]} °C</div></th>
     </tr>
 
-    <tr class="couleur1">
-        <th title="Température minimale" class="bordure2 bordure"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[0])};">{temperature_min_min[0]} °C</div></th>
-        <th title="Température minimale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[1])};">{temperature_min_min[1]} °C</div></th>
-        <th title="Température minimale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[2])};">{temperature_min_min[2]} °C</div></th>
-        <th title="Température minimale"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[3])};">{temperature_min_min[3]} °C</div></th>
+    <tr class="couleur1" title="Température minimale">
+        <th style="background-color: white;" class="bordure2 bordure"><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[0])};">{temperature_min_min[0]} °C</div></th>
+        <th><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[1])};">{temperature_min_min[1]} °C</div></th>
+        <th><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[2])};">{temperature_min_min[2]} °C</div></th>
+        <th><div class="mini-case" style="background-color: {temperature_to_color(temperature_min_min[3])};">{temperature_min_min[3]} °C</div></th>
     </tr>
 
-    <tr class="couleur1">
-        <th title="Vitesse du vent maximale" class="bordure2 bordure">{vent_arr[0]} km/h</th>
-        <th title="Vitesse du vent maximale">{vent_arr[1]} km/h</th>
-        <th title="Vitesse du vent maximale">{vent_arr[2]} km/h</th>
-        <th title="Vitesse du vent maximale">{vent_arr[3]} km/h</th>
+    <tr class="couleur1" title="Vitesse du vent maximale">
+        <th style="background-color: white;" class="bordure2 bordure">{vent_arr[0]} km/h</th>
+        <th>{vent_arr[1]} km/h</th>
+        <th>{vent_arr[2]} km/h</th>
+        <th>{vent_arr[3]} km/h</th>
     </tr>
     
-    <tr class="couleur1">
-        <th title="Quantité de précipitations" class="bordure2 bordure bottom">{precipitations[0]} mm</th>
-        <th title="Quantité de précipitations">{precipitations[1]} mm</th>
-        <th title="Quantité de précipitations">{precipitations[2]} mm</th>
-        <th title="Quantité de précipitations">{precipitations[3]} mm</th>
+    <tr class="couleur1" title="Quantité de précipitations">
+        <th style="background-color: white;" class="bordure2 bordure bottom">{precipitations[0]} mm</th>
+        <th>{precipitations[1]} mm</th>
+        <th>{precipitations[2]} mm</th>
+        <th>{precipitations[3]} mm</th>
     </tr>
 </table>
 """
