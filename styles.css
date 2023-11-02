@@ -8,6 +8,11 @@ table td {
     vertical-align: middle;
 }
 
+table {
+    border-radius: 5px; /* Arrondissement des bords du tableau */
+    overflow: hidden; /* Cette propriété assure que le contenu à l'intérieur du tableau ne déborde pas des coins arrondis */
+}
+
 .couleur1 {
     background-color: #f7fff1;
 }
@@ -21,14 +26,15 @@ table td {
 }
 
 th:nth-child(1), td:nth-child(1) {
-    border-left: 3px solid #ff7b00; /* Bordure de la deuxième colonne */
-    border-right: 3px solid #ff7b00; /* Bordure de la deuxième colonne */
+    border-left: 3px solid rgb(16, 185, 38); /* Bordure de la deuxième colonne */
+    border-right: 3px solid rgb(16, 185, 38); /* Bordure de la deuxième colonne */
 }
+
 .top {
-    border-top: 3px solid #ff7b00; /* Bordure supérieure de la cellule spéciale */
+    border-top: 3px solid rgb(16, 185, 38); /* Bordure supérieure de la cellule spéciale */
 }
 .bottom {
-    border-bottom: 3px solid #ff7b00; /* Bordure supérieure de la cellule spéciale */
+    border-bottom: 3px solid rgb(16, 185, 38); /* Bordure supérieure de la cellule spéciale */
 }
 
 .mini-case {

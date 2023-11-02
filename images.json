@@ -1,115 +1,115 @@
 {
 	"0":{
 		"nom":"Clair, ciel sans nuage",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/01_day_cloudless.png"
+		"url":"images_svg/0.svg"
 	},
 	"1":{
 		"nom":"Clair avec quelques nuages bas",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/04_day.png"
+		"url":"images_svg/1.svg"
 	},
 	"2":{
 		"nom":"Partiellement nuageux",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/07_day_altocumulus.png"
+		"url":"images_svg/2.svg"
 	},
 	"3":{
 		"nom":"Ciel couvert",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/22_day.png"
+		"url":"images_svg/3.svg"
 	},
 	"45":{
 		"nom":"Brouillard",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/16_day.png"
+		"url":"images_svg/45.svg"
 	},
 	"48":{
 		"nom":"Dépôt de givre",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/05_iday.png"
+		"url":"images_svg/48.svg"
 	},
 	"51":{
 		"nom":"Légère bruine",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
+		"url":"images_svg/61.svg"
 	},
 	"53":{
 		"nom":"Bruine",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
+		"url":"images_svg/61.svg"
 	},
 	"55":{
 		"nom":"Forte bruine",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
+		"url":"images_svg/61.svg"
 	},
 	"56":{
 		"nom":"Légère bruine verglaçante",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
+		"url":"images_svg/61.svg"
 	},
 	"57":{
 		"nom":"Forte bruine verglaçante",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
+		"url":"images_svg/61.svg"
 	},
 	"61":{
 		"nom":"Couvert avec pluie légère",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/33_day_nimbostratus_1.png"
+		"url":"images_svg/61.svg"
 	},
 	"63":{
 		"nom":"Couvert avec pluie",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/23_day.png"
+		"url":"images_svg/63.svg"
 	},
 	"65":{
 		"nom":"Couvert avec fortes pluies",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/25_day_nimbostratus_2.png"
+		"url":"images_svg/65.svg"
 	},
 	"66":{
 		"nom":"Couvert avec pluie verglaçante",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/23_day.png"
+		"url":"images_svg/63.svg"
 	},
 	"67":{
 		"nom":"Couvert avec fortes pluies verglaçantes",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/25_day_nimbostratus_2.png"
+		"url":"images_svg/65.svg"
 	},
 	"71":{
 		"nom":"Couvert avec neige légère",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/34_day_nimbostratus_4.png"
+		"url":"images_svg/71.svg"
 	},
 	"73":{
 		"nom":"Couvert avec chutes de neige",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/24_day_nimbostratus_6.png"
+		"url":"images_svg/73.svg"
 	},
 	"75":{
 		"nom":"Couvert avec fortes chutes de neige",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/26_day.png"
+		"url":"images_svg/75.svg"
 	},
 	"77":{
 		"nom":"Chutes de neiges éparses",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/10_iday.png"
+		"url":"images_svg/77.svg"
 	},
 	"80":{
 		"nom":"Risques de légères averses",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/07_iday_cumulus_1.png"
+		"url":"images_svg/80.svg"
 	},
 	"81":{
 		"nom":"Risques d'averses",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/16_iday.png"
+		"url":"images_svg/81.svg"
 	},
 	"82":{
 		"nom":"Risques de fortes averses",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/14_iday.png"
+		"url":"images_svg/82.svg"
 	},
 	"85":{
 		"nom":"Risques d'averses de neige",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/17_iday.png"
+		"url":"images_svg/85.svg"
 	},
 	"86":{
 		"nom":"Risques de fortes averses de neige",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/iday/15_iday.png"
+		"url":"images_svg/86.svg"
 	},
 	"95":{
 		"nom":"Pluie, orages probables",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/27_day.png"
+		"url":"images_svg/95.svg"
 	},
 	"96":{
 		"nom":"Orages probables avec légère grêle",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/28_day_cumulonimbus_2.png"
+		"url":"images_svg/96.svg"
 	},
 	"99":{
 		"nom":"Orages probables avec forte grêle",
-		"url":"https://content.meteoblue.com/assets/images/graphics/pictos/day/30_day_cumulomimbus_3.png"
+		"url":"images_svg/99.svg"
 	}
 }
 

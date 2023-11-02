@@ -1,6 +1,6 @@
 ---
 title: "Météo Montpellier"
-subtitle: "Occitanie, France, 43.61°N 3.88°E, 55m s.n.m.-"
+subtitle: "Occitanie, France, 43.61°N 3.88°E, 55m s.n.m."
 ---
 
 ```{python}
@@ -140,14 +140,10 @@ html_code = f"""
     </tr>
 
     <tr class="couleur2" title="Temps">
-        <th class="bordure2 bordure"><img src ="{noms_urls[0]['url']}"></a><br>
-        {noms_urls[0]['nom']}</th>
-        <th><img src ="{noms_urls[1]['url']}"></a><br>
-        {noms_urls[1]['nom']}</th>
-        <th><img src ="{noms_urls[2]['url']}"></a><br>
-        {noms_urls[2]['nom']}</th>
-        <th><img src ="{noms_urls[3]['url']}"></a><br>
-        {noms_urls[3]['nom']}</th>
+        <th title="{noms_urls[0]['nom']}" class="bordure2 bordure"><img src ="{noms_urls[0]['url']}"></a><br>{noms_urls[0]['nom']}</th>
+        <th title="{noms_urls[1]['nom']}"><img src ="{noms_urls[1]['url']}"></a><br>{noms_urls[1]['nom']}</th>
+        <th title="{noms_urls[2]['nom']}"><img src ="{noms_urls[2]['url']}"></a><br>{noms_urls[2]['nom']}</th>
+        <th title="{noms_urls[3]['nom']}"><img src ="{noms_urls[3]['url']}"></a><br>{noms_urls[3]['nom']}</th>
     </tr>
 
     <tr class="couleur1" title="Température maximale">
@@ -165,17 +161,21 @@ html_code = f"""
     </tr>
 
     <tr class="couleur1" title="Vitesse du vent maximale">
-        <th style="background-color: white;" class="bordure2 bordure">{vent_arr[0]} km/h</th>
-        <th>{vent_arr[1]} km/h</th>
-        <th>{vent_arr[2]} km/h</th>
-        <th>{vent_arr[3]} km/h</th>
+        <th style="background-color: white;" class="bordure2 bordure"><div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[0]}deg); display: inline-block; margin: 0 auto;">
+        <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;"></div></div>{vent_arr[0]} km/h</th>
+        <th><div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[1]}deg); display: inline-block; margin: 0 auto;">
+        <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;"></div></div>{vent_arr[1]} km/h</th>
+        <th><div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[2]}deg); display: inline-block; margin: 0 auto;">
+        <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;"></div></div>{vent_arr[2]} km/h</th>
+        <th><div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[3]}deg); display: inline-block; margin: 0 auto;">
+        <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;"></div></div>{vent_arr[3]} km/h</th>
     </tr>
     
     <tr class="couleur1" title="Quantité de précipitations">
-        <th style="background-color: white;" class="bordure2 bordure bottom">{precipitations[0]} mm</th>
-        <th>{precipitations[1]} mm</th>
-        <th>{precipitations[2]} mm</th>
-        <th>{precipitations[3]} mm</th>
+        <th style="background-color: white;" class="bordure2 bordure bottom"><img src ="images_svg/Water_Drop.svg"> {precipitations[0]} mm</a></th>
+        <th><img src ="images_svg/Water_Drop.svg"> {precipitations[1]} mm</a></th>
+        <th><img src ="images_svg/Water_Drop.svg"> {precipitations[2]} mm</a></th>
+        <th><img src ="images_svg/Water_Drop.svg"> {precipitations[3]} mm</a></th>
     </tr>
 </table>
 """
