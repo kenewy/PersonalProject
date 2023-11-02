@@ -21,7 +21,6 @@ if response.status_code == 200:
     data = response.json()
     # Accéder aux données météo à partir de la réponse JSON
     jour = data["daily"]["time"]
-    # date = jour[""]
     wmo = data["daily"]["weathercode"]
     temperature_max = data["daily"]["temperature_2m_max"]
     temperature_min = data["daily"]["temperature_2m_min"]
@@ -68,7 +67,7 @@ noms_jours, dates_formatees = zip(*[formater_date(date) for date in dates])
 
 ```{python}
 """
-WMO
+Icônes WMO
 """
 import json
 
@@ -117,11 +116,6 @@ scalarmap.set_array([])  # Permet de normaliser les valeurs
 def temperature_to_color(temperature):
     color = scalarmap.to_rgba(temperature)
     return mcolors.to_hex(color, keep_alpha=False)
-
-# Exemple d'utilisation
-temperature = 20
-couleur_hex = temperature_to_color(temperature)
-print(couleur_hex)  # Affiche la couleur hexadécimale correspondant à la température
 ```
 
 ```{python}
