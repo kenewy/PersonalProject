@@ -69,5 +69,5 @@ th:nth-child(1), td:nth-child(1) {
 
 /* Repositionnement case jour */
 .day-image {
-    transform: translate(55%);
+    transform: translate(50%);
 }
