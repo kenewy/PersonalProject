@@ -5,7 +5,7 @@
 		"urln":"images_svg/0n.svg"
 	},
 	"1":{
-		"nom":"Clair avec quelques nuages bas",
+		"nom":"Clair avec quelques nuages",
 		"url":"images_svg/1.svg",
 		"urln":"images_svg/1n.svg"
 	},
@@ -70,12 +70,12 @@
 		"urln":"images_svg/65n.svg"
 	},
 	"66":{
-		"nom":"Couvert avec pluie verglaçante",
+		"nom":"Pluie verglaçante",
 		"url":"images_svg/63.svg",
 		"urln":"images_svg/63n.svg"
 	},
 	"67":{
-		"nom":"Couvert avec fortes pluies verglaçantes",
+		"nom":"Fortes pluies verglaçantes",
 		"url":"images_svg/65.svg",
 		"urln":"images_svg/65n.svg"
 	},
@@ -85,12 +85,12 @@
 		"urln":"images_svg/71n.svg"
 	},
 	"73":{
-		"nom":"Couvert avec chutes de neige",
+		"nom":"Chutes de neige",
 		"url":"images_svg/73.svg",
 		"urln":"images_svg/73n.svg"
 	},
 	"75":{
-		"nom":"Couvert avec fortes chutes de neige",
+		"nom":"Fortes chutes de neige",
 		"url":"images_svg/75.svg",
 		"urln":"images_svg/75n.svg"
 	},
@@ -120,7 +120,7 @@
 		"urln":"images_svg/73n.svg"
 	},
 	"86":{
-		"nom":"Risques de fortes averses de neige",
+		"nom":"Fortes averses de neige",
 		"url":"images_svg/86.svg",
 		"urln":"images_svg/75n.svg"
 	},
@@ -130,12 +130,12 @@
 		"urln":"images_svg/95n.svg"
 	},
 	"96":{
-		"nom":"Orages probables avec légère grêle",
+		"nom":"Orages avec légère grêle",
 		"url":"images_svg/96.svg",
 		"urln":"images_svg/96n.svg"
 	},
 	"99":{
-		"nom":"Orages probables avec forte grêle",
+		"nom":"Orages avec forte grêle",
 		"url":"images_svg/99.svg",
 		"urln":"images_svg/99n.svg"
 	}
