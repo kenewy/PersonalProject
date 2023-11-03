@@ -53,26 +53,32 @@ else:
 Dates
 """
 from datetime import datetime
-import locale
 
-# Définir la locale en français
-locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
+# Dictionnaire de correspondance des abréviations des jours de la semaine en français
+jours_semaine_fr = {
+    'Mon': 'Lun',
+    'Tue': 'Mar',
+    'Wed': 'Mer',
+    'Thu': 'Jeu',
+    'Fri': 'Ven',
+    'Sat': 'Sam',
+    'Sun': 'Dim'
+}
 
-# Fonction pour formater les dates
+# Fonction pour formater les dates sans utiliser locale
 def formater_date(date):
     # Convertir la chaîne de date en objet datetime
     date_obj = datetime.strptime(date, '%Y-%m-%d')
-    # Formater l'abréviation du jour en minuscules et sans point à la fin
-    nom_jour_abrege = date_obj.strftime('%a').lower().rstrip('.')
-    # Mettre en majuscule la première lettre de l'abréviation du jour
-    nom_jour_abrege = nom_jour_abrege.capitalize()
+    # Obtenir l'abréviation du jour en anglais
+    nom_jour_abrege_en = date_obj.strftime('%a')
+    # Mapper l'abréviation du jour en français à partir du dictionnaire
+    nom_jour_abrege_fr = jours_semaine_fr.get(nom_jour_abrege_en)
     # Formater la date en "jour/mois"
     jour_mois = date_obj.strftime('%d/%m')
-    return nom_jour_abrege, jour_mois
+    return nom_jour_abrege_fr, jour_mois
 
 # Utiliser la fonction pour formater les dates dans la liste
 noms_jours, dates_formatees = zip(*[formater_date(date) for date in jour])
-
 
 """
 Icônes WMO
