@@ -7,6 +7,12 @@ subtitle: "Occitanie, France, 43.61°N 3.88°E, 55m s.n.m."
 """
 API
 """
+from IPython.display import display, HTML
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import json
+from datetime import datetime
 import pandas as pd
 import requests
 
@@ -30,14 +36,18 @@ if response.status_code == 200:
     precipitations = data["daily"]["precipitation_sum"]
 
     # Valeurs arrondies à l'unité et remplacer les valeurs manquantes par "-"
-    temperature_max_maj = [round(temp) if not pd.isna(temp) else "-" for temp in temperature_max]
-    temperature_min_min = [round(temp) if not pd.isna(temp) else "-" for temp in temperature_min]
+    temperature_max_maj = [round(temp) if not pd.isna(
+        temp) else "-" for temp in temperature_max]
+    temperature_min_min = [round(temp) if not pd.isna(
+        temp) else "-" for temp in temperature_min]
     vent_arr = [round(temp) if not pd.isna(temp) else "-" for temp in vent]
     # Remplacer les valeurs manquantes par "-" pour les autres variables
     jour = [date if not pd.isna(date) else "-" for date in jour]
     wmo = [code if not pd.isna(code) else "-" for code in wmo]
-    direction_vent = [direction if not pd.isna(direction) else "-" for direction in direction_vent]
-    precipitations = [precipitation if not pd.isna(precipitation) else "-" for precipitation in precipitations]
+    direction_vent = [direction if not pd.isna(
+        direction) else "-" for direction in direction_vent]
+    precipitations = [precipitation if not pd.isna(
+        precipitation) else "-" for precipitation in precipitations]
     # Moyenne des températures
     moyenne = []
     for i in range(4):
@@ -45,14 +55,11 @@ if response.status_code == 200:
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
-```
 
 
-```{python}
 """
 Dates
 """
-from datetime import datetime
 
 # Dictionnaire de correspondance des abréviations des jours de la semaine en français
 jours_semaine_fr = {
@@ -66,6 +73,8 @@ jours_semaine_fr = {
 }
 
 # Fonction pour formater les dates sans utiliser locale
+
+
 def formater_date(date):
     # Convertir la chaîne de date en objet datetime
     date_obj = datetime.strptime(date, '%Y-%m-%d')
@@ -77,13 +86,14 @@ def formater_date(date):
     jour_mois = date_obj.strftime('%d/%m')
     return nom_jour_abrege_fr, jour_mois
 
+
 # Utiliser la fonction pour formater les dates dans la liste
 noms_jours, dates_formatees = zip(*[formater_date(date) for date in jour])
+
 
 """
 Icônes WMO
 """
-import json
 
 # Charger le fichier JSON dans un dictionnaire
 with open('images.json', 'r') as json_file:
@@ -102,15 +112,13 @@ for numero in wmo:
         urln = info['urln']
         noms_urls.append({'nom': nom, 'url': url, 'urln': urln})
     else:
-        noms_urls.append({'nom': '', 'url': '', 'urln': ''})  # Valeurs par défaut si le numéro WMO n'est pas trouvé
+        # Valeurs par défaut si le numéro WMO n'est pas trouvé
+        noms_urls.append({'nom': '', 'url': '', 'urln': ''})
 
 
 """
 Couleurs températures
 """
-import matplotlib.colors as mcolors
-import matplotlib.pyplot as plt
-import numpy as np
 
 # Définir les températures minimale et maximale
 min_temp = -15
@@ -123,17 +131,16 @@ scalarmap = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
 scalarmap.set_array([])  # Permet de normaliser les valeurs
 
 # Fonction pour convertir la température en couleur hexadécimale
+
+
 def temperature_to_color(temperature):
     color = scalarmap.to_rgba(temperature)
     return mcolors.to_hex(color, keep_alpha=False)
-```
 
 
-```{python}
 """
 Tableau
 """
-from IPython.display import display, HTML
 
 html_code = f"""
 <head>

@@ -1,143 +1,142 @@
 {
-	"0":{
-		"nom":"Clair, ciel sans nuage",
-		"url":"images_svg/0.svg",
-		"urln":"images_svg/0n.svg"
+	"0": {
+		"nom": "Clair, ciel sans nuage",
+		"url": "images_svg/0.svg",
+		"urln": "images_svg/0n.svg"
 	},
-	"1":{
-		"nom":"Clair avec quelques nuages",
-		"url":"images_svg/1.svg",
-		"urln":"images_svg/1n.svg"
+	"1": {
+		"nom": "Clair avec quelques nuages",
+		"url": "images_svg/1.svg",
+		"urln": "images_svg/1n.svg"
 	},
-	"2":{
-		"nom":"Partiellement nuageux",
-		"url":"images_svg/2.svg",
-		"urln":"images_svg/2n.svg"
+	"2": {
+		"nom": "Partiellement nuageux",
+		"url": "images_svg/2.svg",
+		"urln": "images_svg/2n.svg"
 	},
-	"3":{
-		"nom":"Ciel couvert",
-		"url":"images_svg/3.svg",
-		"urln":"images_svg/3n.svg"
+	"3": {
+		"nom": "Ciel couvert",
+		"url": "images_svg/3.svg",
+		"urln": "images_svg/3n.svg"
 	},
-	"45":{
-		"nom":"Brouillard",
-		"url":"images_svg/45.svg",
-		"urln":"images_svg/45n.svg"
+	"45": {
+		"nom": "Brouillard",
+		"url": "images_svg/45.svg",
+		"urln": "images_svg/45n.svg"
 	},
-	"48":{
-		"nom":"Dépôt de givre",
-		"url":"images_svg/48.svg",
-		"urln":"images_svg/45n.svg"
+	"48": {
+		"nom": "Dépôt de givre",
+		"url": "images_svg/48.svg",
+		"urln": "images_svg/45n.svg"
 	},
-	"51":{
-		"nom":"Légère bruine",
-		"url":"images_svg/61.svg",
-		"urln":"images_svg/61n.svg"
+	"51": {
+		"nom": "Légère bruine",
+		"url": "images_svg/61.svg",
+		"urln": "images_svg/61n.svg"
 	},
-	"53":{
-		"nom":"Bruine",
-		"url":"images_svg/61.svg",
-		"urln":"images_svg/61n.svg"
+	"53": {
+		"nom": "Bruine",
+		"url": "images_svg/61.svg",
+		"urln": "images_svg/61n.svg"
 	},
-	"55":{
-		"nom":"Forte bruine",
-		"url":"images_svg/63.svg",
-		"urln":"images_svg/63n.svg"
+	"55": {
+		"nom": "Forte bruine",
+		"url": "images_svg/63.svg",
+		"urln": "images_svg/63n.svg"
 	},
-	"56":{
-		"nom":"Légère bruine verglaçante",
-		"url":"images_svg/61.svg",
-		"urln":"images_svg/61n.svg"
+	"56": {
+		"nom": "Légère bruine verglaçante",
+		"url": "images_svg/61.svg",
+		"urln": "images_svg/61n.svg"
 	},
-	"57":{
-		"nom":"Forte bruine verglaçante",
-		"url":"images_svg/63.svg",
-		"urln":"images_svg/63n.svg"
+	"57": {
+		"nom": "Forte bruine verglaçante",
+		"url": "images_svg/63.svg",
+		"urln": "images_svg/63n.svg"
 	},
-	"61":{
-		"nom":"Couvert avec pluie légère",
-		"url":"images_svg/61.svg",
-		"urln":"images_svg/61n.svg"
+	"61": {
+		"nom": "Couvert avec pluie légère",
+		"url": "images_svg/61.svg",
+		"urln": "images_svg/61n.svg"
 	},
-	"63":{
-		"nom":"Couvert avec pluie",
-		"url":"images_svg/63.svg",
-		"urln":"images_svg/63n.svg"
+	"63": {
+		"nom": "Couvert avec pluie",
+		"url": "images_svg/63.svg",
+		"urln": "images_svg/63n.svg"
 	},
-	"65":{
-		"nom":"Couvert avec fortes pluies",
-		"url":"images_svg/65.svg",
-		"urln":"images_svg/65n.svg"
+	"65": {
+		"nom": "Couvert avec fortes pluies",
+		"url": "images_svg/65.svg",
+		"urln": "images_svg/65n.svg"
 	},
-	"66":{
-		"nom":"Pluie verglaçante",
-		"url":"images_svg/63.svg",
-		"urln":"images_svg/63n.svg"
+	"66": {
+		"nom": "Pluie verglaçante",
+		"url": "images_svg/63.svg",
+		"urln": "images_svg/63n.svg"
 	},
-	"67":{
-		"nom":"Fortes pluies verglaçantes",
-		"url":"images_svg/65.svg",
-		"urln":"images_svg/65n.svg"
+	"67": {
+		"nom": "Fortes pluies verglaçantes",
+		"url": "images_svg/65.svg",
+		"urln": "images_svg/65n.svg"
 	},
-	"71":{
-		"nom":"Couvert avec neige légère",
-		"url":"images_svg/71.svg",
-		"urln":"images_svg/71n.svg"
+	"71": {
+		"nom": "Couvert avec neige légère",
+		"url": "images_svg/71.svg",
+		"urln": "images_svg/71n.svg"
 	},
-	"73":{
-		"nom":"Chutes de neige",
-		"url":"images_svg/73.svg",
-		"urln":"images_svg/73n.svg"
+	"73": {
+		"nom": "Chutes de neige",
+		"url": "images_svg/73.svg",
+		"urln": "images_svg/73n.svg"
 	},
-	"75":{
-		"nom":"Fortes chutes de neige",
-		"url":"images_svg/75.svg",
-		"urln":"images_svg/75n.svg"
+	"75": {
+		"nom": "Fortes chutes de neige",
+		"url": "images_svg/75.svg",
+		"urln": "images_svg/75n.svg"
 	},
-	"77":{
-		"nom":"Chutes de neiges éparses",
-		"url":"images_svg/77.svg",
-		"urln":"images_svg/77n.svg"
+	"77": {
+		"nom": "Chutes de neiges éparses",
+		"url": "images_svg/77.svg",
+		"urln": "images_svg/77n.svg"
 	},
-	"80":{
-		"nom":"Risques de légères averses",
-		"url":"images_svg/80.svg",
-		"urln":"images_svg/80n.svg"
+	"80": {
+		"nom": "Risques de légères averses",
+		"url": "images_svg/80.svg",
+		"urln": "images_svg/80n.svg"
 	},
-	"81":{
-		"nom":"Risques d'averses",
-		"url":"images_svg/81.svg",
-		"urln":"images_svg/61n.svg"
+	"81": {
+		"nom": "Risques d'averses",
+		"url": "images_svg/81.svg",
+		"urln": "images_svg/61n.svg"
 	},
-	"82":{
-		"nom":"Risques de fortes averses",
-		"url":"images_svg/82.svg",
-		"urln":"images_svg/63n.svg"
+	"82": {
+		"nom": "Risques de fortes averses",
+		"url": "images_svg/82.svg",
+		"urln": "images_svg/63n.svg"
 	},
-	"85":{
-		"nom":"Risques d'averses de neige",
-		"url":"images_svg/85.svg",
-		"urln":"images_svg/73n.svg"
+	"85": {
+		"nom": "Risques d'averses de neige",
+		"url": "images_svg/85.svg",
+		"urln": "images_svg/73n.svg"
 	},
-	"86":{
-		"nom":"Fortes averses de neige",
-		"url":"images_svg/86.svg",
-		"urln":"images_svg/75n.svg"
+	"86": {
+		"nom": "Fortes averses de neige",
+		"url": "images_svg/86.svg",
+		"urln": "images_svg/75n.svg"
 	},
-	"95":{
-		"nom":"Pluie, orages probables",
-		"url":"images_svg/95.svg",
-		"urln":"images_svg/95n.svg"
+	"95": {
+		"nom": "Pluie, orages probables",
+		"url": "images_svg/95.svg",
+		"urln": "images_svg/95n.svg"
 	},
-	"96":{
-		"nom":"Orages avec légère grêle",
-		"url":"images_svg/96.svg",
-		"urln":"images_svg/96n.svg"
+	"96": {
+		"nom": "Orages avec légère grêle",
+		"url": "images_svg/96.svg",
+		"urln": "images_svg/96n.svg"
 	},
-	"99":{
-		"nom":"Orages avec forte grêle",
-		"url":"images_svg/99.svg",
-		"urln":"images_svg/99n.svg"
+	"99": {
+		"nom": "Orages avec forte grêle",
+		"url": "images_svg/99.svg",
+		"urln": "images_svg/99n.svg"
 	}
 }
-
