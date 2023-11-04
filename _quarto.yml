@@ -24,7 +24,5 @@ execute:
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
-    toc: false
+    theme: cerulean
 jupyter: python3
