@@ -37,9 +37,9 @@ if response.status_code == 200:
     precipitations = data["daily"]["precipitation_sum"]
 
     # Valeurs arrondies à l'unité et remplacer les valeurs manquantes par "-"
-    temperature_max_maj = [round(temp) if not pd.isna(
+    temperature_max_arr = [round(temp) if not pd.isna(
         temp) else "-" for temp in temperature_max]
-    temperature_min_min = [round(temp) if not pd.isna(
+    temperature_min_arr = [round(temp) if not pd.isna(
         temp) else "-" for temp in temperature_min]
     vent_arr = [round(temp) if not pd.isna(temp) else "-" for temp in vent]
 
@@ -54,7 +54,7 @@ if response.status_code == 200:
     # Moyenne des températures
     moyenne = []
     for i in range(4):
-        moyenne.append((temperature_max_maj[i]+temperature_min_min[i])/2)
+        moyenne.append((temperature_max_arr[i]+temperature_min_arr[i])/2)
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
@@ -157,9 +157,9 @@ def vent_to_color(vent):
         return 'rgba(0, 0, 0, 0)'
     elif (30 <= vent < 50):
         return 'rgb(255, 255, 0)'
-    elif (50 <= temperature < 100):
+    elif (50 <= vent < 100):
         return 'rgb(255, 128, 0)'
-    elif (100 <= temperature < 150):
+    elif (100 <= vent < 150):
         return 'rgb(255, 0, 0)'
     else:
         return 'rgb(130, 0, 255)'
@@ -173,7 +173,7 @@ Précipitations
 
 
 def eau(i, precipitations):
-    if precipitations[i] != 0.0:
+    if precipitations[i] != "-":
         return f'<img src="images_svg/Water_Drop.svg"> {precipitations[i]} mm'
     else:
         return '-'
@@ -244,22 +244,22 @@ html_code = f"""
     <tr class="couleur1" title="Températures minimale - maximale">
         <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)" class="bordure2 bordure">
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[0])};">
-                {temperature_min_min[0]} °C - {temperature_max_maj[0]} °C
+                {temperature_min_arr[0]} °C - {temperature_max_arr[0]} °C
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[1])};">
-                {temperature_min_min[1]} °C - {temperature_max_maj[1]} °C
+                {temperature_min_arr[1]} °C - {temperature_max_arr[1]} °C
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[2])};">
-                {temperature_min_min[2]} °C - {temperature_max_maj[2]} °C
+                {temperature_min_arr[2]} °C - {temperature_max_arr[2]} °C
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[3])};">
-                {temperature_min_min[3]} °C - {temperature_max_maj[3]} °C
+                {temperature_min_arr[3]} °C - {temperature_max_arr[3]} °C
             </div>
         </th>
     </tr>
