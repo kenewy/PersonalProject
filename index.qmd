@@ -303,7 +303,7 @@ html_code = f"""
             <img class="circular-image" src ="{noms_urls_n[3]['urln']}" title="{noms_urls_n[3]['nom']}">
         </th>
         <th>
-            <img src ="{noms_urls[4]['url']}" title="{noms_urls[4]['nom']}">
+            <img src ="{noms_urls[4]['url']}" title="{noms_urls[4]['nom']}" style="width: 60px; height: 60px">
         </th>
     </tr>
 
