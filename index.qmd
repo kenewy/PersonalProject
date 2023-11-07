@@ -12,36 +12,54 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 import requests
+from collections import Counter
 
-# URL de l'API
-url = "https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,winddirection_10m_dominant&timezone=Europe%2FBerlin"
+# Obtenir la date actuelle
+date_actuelle = datetime.now()
 
-# Envoi de la requête GET à l'API
+# Obtenir la date du cinquième jour
+jours = 4
+date_jours = date_actuelle + timedelta(days=jours)
+
+# Formater les dates au format requis pour l'URL
+format_date = "%Y-%m-%d"
+date_i = date_actuelle.strftime(format_date)
+date_j = date_jours.strftime(format_date)
+
+# Construire l'URL de l'API "daily" selon la date (intervalle de 5 jours) à Montpellier
+latitude = 43.6109
+longitude = 3.8763
+
+url = f"https://api.open-meteo.com/v1/meteofrance?latitude={latitude}&longitude={longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_direction_10m_dominant&timezone=Europe%2FBerlin&start_date={date_i}&end_date={date_j}"
+
+# URL de l'API "hourly" qui servira à calculer la vitesse moyenne du vent et afficher la bonne icône WMO de nuit
+url_h = f"https://api.open-meteo.com/v1/meteofrance?latitude={latitude}&longitude={longitude}&hourly=weather_code,wind_speed_10m&timezone=Europe%2FBerlin&start_date={date_i}&end_date={date_j}"
+
+# Envoi de la requête GET aux APIs
 response = requests.get(url)
+response_h = requests.get(url_h)
 
-# Vérification du statut de la requête
+# Vérification du statut de la requête "daily"
 if response.status_code == 200:
     # Conversion des données JSON en un dictionnaire Python
     data = response.json()
 
     # Accéder aux données météo à partir de la réponse JSON
     jour = data["daily"]["time"]
-    wmo = data["daily"]["weathercode"]
+    wmo = data["daily"]["weather_code"]
     temperature_max = data["daily"]["temperature_2m_max"]
     temperature_min = data["daily"]["temperature_2m_min"]
-    vent = data["daily"]["windspeed_10m_max"]
-    direction_vent = data["daily"]["winddirection_10m_dominant"]
+    direction_vent = data["daily"]["wind_direction_10m_dominant"]
     precipitations = data["daily"]["precipitation_sum"]
 
-    # Valeurs arrondies à l'unité et remplacer les valeurs manquantes par "-"
-    temperature_max_arr = [round(temp) if not pd.isna(
+    # Prendre les valeurs entières et remplacer les valeurs manquantes par "-" pour les températures
+    temperature_max_ent = [round(temp) if not pd.isna(
         temp) else "-" for temp in temperature_max]
-    temperature_min_arr = [round(temp) if not pd.isna(
+    temperature_min_ent = [round(temp) if not pd.isna(
         temp) else "-" for temp in temperature_min]
-    vent_arr = [round(temp) if not pd.isna(temp) else "-" for temp in vent]
 
     # Remplacer les valeurs manquantes par "-" pour les autres variables
     jour = [date if not pd.isna(date) else "-" for date in jour]
@@ -51,17 +69,30 @@ if response.status_code == 200:
     precipitations = [precipitation if not pd.isna(
         precipitation) else "-" for precipitation in precipitations]
 
-    # Moyenne des températures
+    # Prendre la moyenne des températures
     moyenne = []
-    for i in range(4):
-        moyenne.append((temperature_max_arr[i]+temperature_min_arr[i])/2)
+    for i in range(jours+1):
+        moyenne.append((temperature_max_ent[i]+temperature_min_ent[i])/2)
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
 
 
+# Vérification du statut de la requête "hourly"
+if response_h.status_code == 200:
+    # Conversion des données JSON en un dictionnaire Python
+    data_h = response_h.json()
+
+    # Accéder aux données météo à partir de la réponse JSON
+    vent_h = data_h["hourly"]["wind_speed_10m"]
+    wmo_h = data_h["hourly"]["weather_code"]
+else:
+    # Affichage d'un message d'erreur si la requête échoue
+    print("Erreur lors de la récupération des données météorologiques horaires.")
+
+
 """
-Dates
+DATES
 """
 
 # Dictionnaire de correspondance des abréviations des jours de la semaine en français
@@ -95,30 +126,42 @@ noms_jours, dates_formatees = zip(*[formater_date(date) for date in jour])
 
 
 """
-Icônes WMO
+ICÔNES WMO
 """
 
 # Charger le fichier JSON dans un dictionnaire
 with open('images.json', 'r') as json_file:
     data = json.load(json_file)
 
-# Créer un dictionnaire de correspondance entre les numéros WMO et les noms et URL du fichier JSON
+# Créer un dictionnaire de correspondance entre les codes WMO et les noms et URLs du fichier JSON
 correspondance_wmo = {str(key): value for key, value in data.items()}
 
-# Récupérer les URLs et les noms à partir des numéros WMO
+# Récupérer les URLs et les noms à partir des codes WMO
 noms_urls = []
 for i in wmo:
-    if str(i) in correspondance_wmo:
-        info = correspondance_wmo[str(i)]
-        noms_urls.append(
-            {'nom': info['nom'], 'url': info['url'], 'urln': info['urln']})
-    else:
-        # Valeurs par défaut si le numéro WMO n'est pas trouvé
-        noms_urls.append({'nom': '', 'url': '', 'urln': ''})
+    info = correspondance_wmo[str(i)]
+    noms_urls.append(
+        {'nom': info['nom'], 'url': info['url']})
+
+
+# Trouver les codes WMO de nuit
+wmo_n = [0] * jours
+for i in range(jours):  # Chaque nuit
+    # Utilisation de Counter pour compter les occurrences des codes WMO entre 18h et 6h du matin
+    compteur = Counter(wmo_h[24*i + 18: 24*i + 30])
+    # Trouver l'élément le plus commun et son nombre d'occurrences
+    wmo_n[i] = max(compteur, key=compteur.get)
+
+# Récupérer les URLs partir des codes WMO de nuit
+noms_urls_n = []
+for i in wmo_n:
+    info_n = correspondance_wmo[str(i)]
+    noms_urls_n.append(
+        {'nom': info_n['nom'], 'urln': info_n['urln']})
 
 
 """
-Températures
+TEMPERATURES
 """
 
 # Echelle discrète de couleurs basée sur les températures
@@ -146,8 +189,24 @@ def temperature_to_color(temperature):
 
 
 """
-Vent
+VENT
 """
+
+# Calculer la vitesse moyenne du vent chaque jour
+vent = [0] * (jours+1)
+
+for i in range(jours+1):  # Chaque jour
+    a = 0  # Nombre de données disponibles sur les 24 totales
+    for j in range(24):  # Chaque heure d'une journée
+        # Si la donnée est disponible, elle est ajoutée et a est incrémenté
+        if vent_h[24*i + j] != None:
+            vent[i] = vent[i] + vent_h[24*i + j]
+            a = a + 1
+    vent[i] = vent[i]/a  # Moyenne du vent du jour i selon les valeurs disponibles
+
+# Prendre la valeur entière du vent
+vent_ent = [round(temp) for temp in vent]
+
 
 # Echelle discrète de couleurs basée sur la vitesse du vent
 
@@ -166,7 +225,7 @@ def vent_to_color(vent):
 
 
 """
-Tableau
+TABLEAU METEO
 """
 
 html_code = f"""
@@ -174,10 +233,10 @@ html_code = f"""
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<table id="myTable" title="Date">
+<table id="myTable">
     <!-- Ligne 1 -->
-    <tr class="couleur1">
-        <th style="background-color: rgb(255, 255, 255); border-top:3px solid rgb(20, 15, 185); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)" class="bordure2 bordure top">
+    <tr title="Date" class="couleur1">
+        <th style="background-color: rgb(255, 255, 255); border-top:3px solid rgb(20, 15, 185); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <strong>
                 {noms_jours[0]}
             </strong>
@@ -201,98 +260,123 @@ html_code = f"""
             </strong>
             <br>{dates_formatees[3]}
         </th>
+        <th>
+            <strong>
+                {noms_jours[4]}
+            </strong>
+            <br>{dates_formatees[4]}
+        </th>
     </tr>
 
     <!-- Ligne 2 -->
-    <tr class="couleur2">
-        <th title="{noms_urls[0]['nom']}" style="border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
-            <img class="day-image" src ="{noms_urls[0]['url']}">
-            <img class="circular-image" src ="{noms_urls[0]['urln']}">
+    <tr class="couleur2" title="icône WMO">
+        <th style="border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
+            <img class="day-image" src ="{noms_urls[0]['url']}" title="{noms_urls[0]['nom']}">
+            <img class="circular-image" src ="{noms_urls_n[0]['urln']}" title="{noms_urls_n[0]['nom']}">
             <br>{noms_urls[0]['nom']}
         </th>
-        <th title="{noms_urls[1]['nom']}">
-            <img class="day-image" src ="{noms_urls[1]['url']}">
-            <img class="circular-image" src ="{noms_urls[1]['urln']}">
+        <th>
+            <img class="day-image" src ="{noms_urls[1]['url']}" title="{noms_urls[1]['nom']}">
+            <img class="circular-image" src ="{noms_urls_n[1]['urln']}" title="{noms_urls_n[1]['nom']}">
             <br>{noms_urls[1]['nom']}
         </th>
-        <th title="{noms_urls[2]['nom']}">
-            <img class="day-image" src ="{noms_urls[2]['url']}">
-            <img class="circular-image" src ="{noms_urls[2]['urln']}">
+        <th>
+            <img class="day-image" src ="{noms_urls[2]['url']}" title="{noms_urls[2]['nom']}">
+            <img class="circular-image" src ="{noms_urls_n[2]['urln']}" title="{noms_urls_n[2]['nom']}">
             <br>{noms_urls[2]['nom']}
         </th>
-        <th title="{noms_urls[3]['nom']}">
-            <img src ="{noms_urls[3]['url']}">
+        <th>
+            <img class="day-image" src ="{noms_urls[3]['url']}" title="{noms_urls[3]['nom']}">
+            <img class="circular-image" src ="{noms_urls_n[3]['urln']}" title="{noms_urls_n[3]['nom']}">
             <br>{noms_urls[3]['nom']}
+        </th>
+        <th>
+            <img src ="{noms_urls[4]['url']}" title="{noms_urls[4]['nom']}">
+            <br>{noms_urls[4]['nom']}
         </th>
     </tr>
 
     <!-- Ligne 3 -->
     <tr class="couleur1" title="Températures minimale - maximale">
-        <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)" class="bordure2 bordure">
+        <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[0])};">
-                {temperature_min_arr[0]} °C - {temperature_max_arr[0]} °C
+                {temperature_min_ent[0]} °C - {temperature_max_ent[0]} °C
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[1])};">
-                {temperature_min_arr[1]} °C - {temperature_max_arr[1]} °C
+                {temperature_min_ent[1]} °C - {temperature_max_ent[1]} °C
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[2])};">
-                {temperature_min_arr[2]} °C - {temperature_max_arr[2]} °C
+                {temperature_min_ent[2]} °C - {temperature_max_ent[2]} °C
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne[3])};">
-                {temperature_min_arr[3]} °C - {temperature_max_arr[3]} °C
+                {temperature_min_ent[3]} °C - {temperature_max_ent[3]} °C
+            </div>
+        </th>
+        <th>
+            <div class="mini-case" style="background-color: {temperature_to_color(moyenne[4])};">
+                {temperature_min_ent[4]} °C - {temperature_max_ent[4]} °C
             </div>
         </th>
     </tr>
 
     <!-- Ligne 4 -->
-    <tr class="couleur1" title="Vitesse du vent maximale">
-        <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)" class="bordure2 bordure">
-            <div class="mini-case" style="background-color: {vent_to_color(vent[0])};">
+    <tr class="couleur1" title="Vitesse moyenne du vent">
+        <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
+            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[0])};">
                 <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[0]}deg); display: inline-block; margin: 0 auto;">
                     <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
                     </div>
                 </div>
-            {vent_arr[0]} km/h
+            {vent_ent[0]} km/h
             </div>
         </th>
         <th>
-            <div class="mini-case" style="background-color: {vent_to_color(vent[1])};">
+            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[1])};">
                 <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[1]}deg); display: inline-block; margin: 0 auto;">
                     <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
                     </div>
                 </div>
-            {vent_arr[1]} km/h
+            {vent_ent[1]} km/h
             </div>
         </th>
         <th>
-            <div class="mini-case" style="background-color: {vent_to_color(vent[2])};">
+            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[2])};">
                 <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[2]}deg); display: inline-block; margin: 0 auto;">
                     <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
                     </div>
                 </div>
-            {vent_arr[2]} km/h
+            {vent_ent[2]} km/h
             </div>
         </th>
         <th>
-            <div class="mini-case" style="background-color: {vent_to_color(vent[2])};">
+            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[3])};">
                 <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[3]}deg); display: inline-block; margin: 0 auto;">
                     <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
                     </div>
                 </div>
-            {vent_arr[3]} km/h
+            {vent_ent[3]} km/h
+            </div>
+        </th>
+        <th>
+            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[4])};">
+                <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[4]}deg); display: inline-block; margin: 0 auto;">
+                    <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
+                    </div>
+                </div>
+            {vent_ent[4]} km/h
             </div>
         </th>
     </tr>
     
     <!-- Ligne 5 -->
     <tr class="couleur1" title="Quantité de précipitations">
-        <th style="background-color: rgb(255, 255, 255); border-bottom:3px solid rgb(20, 15, 185); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)" class="bordure2 bordure bottom">
+        <th style="background-color: rgb(255, 255, 255); border-bottom:3px solid rgb(20, 15, 185); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <img src="images_svg/Water_Drop.svg"> {precipitations[0]} mm
         </th>
         <th>
@@ -304,6 +388,9 @@ html_code = f"""
         <th>
             <img src="images_svg/Water_Drop.svg"> {precipitations[3]} mm
         </th>
+        <th>
+            <img src="images_svg/Water_Drop.svg"> {precipitations[4]} mm
+        </th>
     </tr>
 </table>
 """
@@ -311,16 +398,16 @@ html_code = f"""
 display(HTML(html_code))
 ```
 
-Météo de Montpellier pour les 4 prochains jours, aujourd'hui compris, affichant respectivement pour chaque journée (colonne):
+Météo de Montpellier pour les 5 prochains jours, aujourd'hui compris, affichant respectivement pour chaque journée (colonne):
 <ol>
     <li>la date,</li>
     <li>le pictogramme WMO (World Meteorological Organization) avec la description correspondante,</li>
     <li>les températures minimale et maximale en valeur entière en degrés Celsius dont la couleur du fond change en fonction des valeurs,</li>
-    <li>la vitesse du vent maximale (seule donnée disponible) en valeur entière en kilomètres par heure et sa direction cardinale représentée par une flèche, dont la couleur du fond change en fonction de la valeur,</li>
+    <li>la vitesse moyenne du vent en valeur entière en kilomètres par heure et sa direction cardinale représentée par une flèche, dont la couleur du fond change en fonction de la valeur,</li>
     <li>et enfin la quantité de précipitations en millimètres.</li>
 </ol>
-De plus, un pictogramme WMO de nuit apparaît entre chaque jour et affiche le temps de la journée précédente (par manque de données). Tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
+De plus, un pictogramme WMO de nuit apparaît entre chaque jour et est déterminé selon le code WMO ayant le plus grand nombre d'occurences entre 18h et 6h du matin. Tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
 
-Ces descriptions sont affichées en survolant les cellules avec le curseur. Toutes les données affichent "-" si elles sont indisponibles.
+Certaines descriptions sont affichées en survolant les cellules et les images avec un curseur de souris. Il peut arriver que le symbole "-" s'affiche si une ou plusieurs données sont indisponibles.
 
-Les informations proviennent d'une API (Application Programming Interface) choisie proposée par [open-meteo.com](https://open-meteo.com/en/docs/meteofrance-api) et sont mises à jour toutes les trois heures.
+Toutes les informations proviennent d'une API (Application Programming Interface) choisie proposée par [open-meteo.com](https://open-meteo.com/en/docs/meteofrance-api) et sont mises à jour toutes les trois heures.
