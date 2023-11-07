@@ -392,13 +392,13 @@ display(HTML(html_code))
 Météo de Montpellier pour les 5 prochains jours, aujourd'hui compris, affichant respectivement pour chaque journée (colonne):
 <ol>
     <li>la date,</li>
-    <li>le pictogramme WMO (World Meteorological Organization) avec la description correspondante,</li>
+    <li>le pictogramme WMO (World Meteorological Organization),</li>
     <li>les températures minimale et maximale en valeur entière en degrés Celsius dont la couleur du fond change en fonction des valeurs,</li>
     <li>la vitesse moyenne du vent en valeur entière en kilomètres par heure et sa direction cardinale représentée par une flèche (ou rien si la donnée est indisponible), dont la couleur du fond change en fonction de la valeur,</li>
     <li>et enfin la quantité de précipitations en millimètres.</li>
 </ol>
 De plus, un pictogramme WMO de nuit apparaît entre chaque jour et est déterminé selon le code WMO ayant le plus grand nombre d'occurences entre 18h et 6h. Tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
 
-Certaines descriptions sont affichées en survolant les cellules et les images avec un curseur de souris. Il peut arriver que le symbole "-" s'affiche si une ou plusieurs données sont indisponibles.
+Certaines descriptions sont affichées en survolant les cellules et les images avec un curseur de souris. Il peut arriver que le symbole "-" s'affiche à la place de certaines données indisponibles.
 
 Toutes les informations proviennent d'une API (Application Programming Interface) choisie proposée par [open-meteo.com](https://open-meteo.com/en/docs/meteofrance-api) et sont mises à jour toutes les trois heures.
