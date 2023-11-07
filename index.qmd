@@ -224,6 +224,22 @@ def vent_to_color(vent):
         return 'rgb(130, 0, 255)'
 
 
+# Afficher la direction cardinale du vent si possible
+
+
+def generate_wind_icon(direction):
+    if direction == '-':
+        return ''
+    else:
+        return f'''
+            <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction}deg); display: inline-block; margin: 0 auto;">
+                <div style="width: 0; height: 0; border-left: 5px solid transparent; 
+                            border-right: 5px solid transparent; border-bottom: 15px solid black;">
+                </div>
+            </div>
+        '''
+
+
 """
 TABLEAU METEO
 """
@@ -273,26 +289,21 @@ html_code = f"""
         <th style="border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <img class="day-image" src ="{noms_urls[0]['url']}" title="{noms_urls[0]['nom']}">
             <img class="circular-image" src ="{noms_urls_n[0]['urln']}" title="{noms_urls_n[0]['nom']}">
-            <br>{noms_urls[0]['nom']}
         </th>
         <th>
             <img class="day-image" src ="{noms_urls[1]['url']}" title="{noms_urls[1]['nom']}">
             <img class="circular-image" src ="{noms_urls_n[1]['urln']}" title="{noms_urls_n[1]['nom']}">
-            <br>{noms_urls[1]['nom']}
         </th>
         <th>
             <img class="day-image" src ="{noms_urls[2]['url']}" title="{noms_urls[2]['nom']}">
             <img class="circular-image" src ="{noms_urls_n[2]['urln']}" title="{noms_urls_n[2]['nom']}">
-            <br>{noms_urls[2]['nom']}
         </th>
         <th>
             <img class="day-image" src ="{noms_urls[3]['url']}" title="{noms_urls[3]['nom']}">
             <img class="circular-image" src ="{noms_urls_n[3]['urln']}" title="{noms_urls_n[3]['nom']}">
-            <br>{noms_urls[3]['nom']}
         </th>
         <th>
             <img src ="{noms_urls[4]['url']}" title="{noms_urls[4]['nom']}">
-            <br>{noms_urls[4]['nom']}
         </th>
     </tr>
 
@@ -329,47 +340,27 @@ html_code = f"""
     <tr class="couleur1" title="Vitesse moyenne du vent">
         <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <div class="mini-case" style="background-color: {vent_to_color(vent_ent[0])};">
-                <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[0]}deg); display: inline-block; margin: 0 auto;">
-                    <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
-                    </div>
-                </div>
-            {vent_ent[0]} km/h
+                {generate_wind_icon(direction_vent[0])} {vent_ent[0]} km/h
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {vent_to_color(vent_ent[1])};">
-                <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[1]}deg); display: inline-block; margin: 0 auto;">
-                    <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
-                    </div>
-                </div>
-            {vent_ent[1]} km/h
+                {generate_wind_icon(direction_vent[1])} {vent_ent[1]} km/h
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {vent_to_color(vent_ent[2])};">
-                <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[2]}deg); display: inline-block; margin: 0 auto;">
-                    <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
-                    </div>
-                </div>
-            {vent_ent[2]} km/h
+                {generate_wind_icon(direction_vent[2])} {vent_ent[2]} km/h
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {vent_to_color(vent_ent[3])};">
-                <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[3]}deg); display: inline-block; margin: 0 auto;">
-                    <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
-                    </div>
-                </div>
-            {vent_ent[3]} km/h
+                {generate_wind_icon(direction_vent[3])} {vent_ent[3]} km/h
             </div>
         </th>
         <th>
             <div class="mini-case" style="background-color: {vent_to_color(vent_ent[4])};">
-                <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction_vent[4]}deg); display: inline-block; margin: 0 auto;">
-                    <div style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 15px solid black;">
-                    </div>
-                </div>
-            {vent_ent[4]} km/h
+                {generate_wind_icon(direction_vent[4])} {vent_ent[4]} km/h
             </div>
         </th>
     </tr>
@@ -403,10 +394,10 @@ Météo de Montpellier pour les 5 prochains jours, aujourd'hui compris, affichan
     <li>la date,</li>
     <li>le pictogramme WMO (World Meteorological Organization) avec la description correspondante,</li>
     <li>les températures minimale et maximale en valeur entière en degrés Celsius dont la couleur du fond change en fonction des valeurs,</li>
-    <li>la vitesse moyenne du vent en valeur entière en kilomètres par heure et sa direction cardinale représentée par une flèche, dont la couleur du fond change en fonction de la valeur,</li>
+    <li>la vitesse moyenne du vent en valeur entière en kilomètres par heure et sa direction cardinale représentée par une flèche (ou rien si la donnée est indisponible), dont la couleur du fond change en fonction de la valeur,</li>
     <li>et enfin la quantité de précipitations en millimètres.</li>
 </ol>
-De plus, un pictogramme WMO de nuit apparaît entre chaque jour et est déterminé selon le code WMO ayant le plus grand nombre d'occurences entre 18h et 6h du matin. Tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
+De plus, un pictogramme WMO de nuit apparaît entre chaque jour et est déterminé selon le code WMO ayant le plus grand nombre d'occurences entre 18h et 6h. Tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
 
 Certaines descriptions sont affichées en survolant les cellules et les images avec un curseur de souris. Il peut arriver que le symbole "-" s'affiche si une ou plusieurs données sont indisponibles.
 
