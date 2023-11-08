@@ -240,8 +240,8 @@ def generate_wind_icon(direction):
         return ''
     else:
         return f'''
-            <div style="width: 20px; height: 20px; overflow: hidden; transform: rotate({direction}deg); display: inline-block; margin: 0 auto;">
-                <div style="width: 0; height: 0; border-left: 5px solid transparent; 
+            <div style="width: 20px; height: 20px; transform: rotate({direction-180}deg) translate(40%, 10%); display: inline-block">
+                <div style="width: 0; border-left: 5px solid transparent; 
                             border-right: 5px solid transparent; border-bottom: 15px solid black;">
                 </div>
             </div>
