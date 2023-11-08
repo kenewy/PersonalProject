@@ -63,16 +63,20 @@ if response.status_code == 200:
 
     # Remplacer les valeurs manquantes par "-" pour les autres variables
     jour = [date if not pd.isna(date) else "-" for date in jour]
-    wmo = [code if not pd.isna(code) else "-" for code in wmo]
     direction_vent = [direction if not pd.isna(
         direction) else "-" for direction in direction_vent]
     precipitations = [precipitation if not pd.isna(
         precipitation) else "-" for precipitation in precipitations]
 
+    # Remplacer les valeurs manquantes par la valeur 100 (qui affichera une image d'erreur) pour le code wmo
+    wmo = [code_wmo if not pd.isna(
+        code_wmo) else 100 for code_wmo in wmo]
+
     # Prendre la moyenne des températures
     moyenne = []
     for i in range(jours+1):
-        moyenne.append((temperature_max_ent[i]+temperature_min_ent[i])/2)
+        if temperature_max_ent[i] != '-' and temperature_min_ent[i] != '-':
+            moyenne.append((temperature_max_ent[i]+temperature_min_ent[i])/2)
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
@@ -86,6 +90,10 @@ if response_h.status_code == 200:
     # Accéder aux données météo à partir de la réponse JSON
     vent_h = data_h["hourly"]["wind_speed_10m"]
     wmo_h = data_h["hourly"]["weather_code"]
+
+    # Remplacer les valeurs manquantes par la valeur 100 (qui affichera une image d'erreur) pour le code wmo_h
+    wmo_h = [code_wmo_h if not pd.isna(
+        code_wmo_h) else 100 for code_wmo_h in wmo_h]
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques horaires.")
@@ -152,7 +160,7 @@ for i in range(jours):  # Chaque nuit
     # Trouver l'élément le plus commun et son nombre d'occurrences
     wmo_n[i] = max(compteur, key=compteur.get)
 
-# Récupérer les URLs partir des codes WMO de nuit
+# Récupérer les URLs à partir des codes WMO de nuit
 noms_urls_n = []
 for i in wmo_n:
     info_n = correspondance_wmo[str(i)]
@@ -303,7 +311,7 @@ html_code = f"""
             <img class="circular-image" src ="{noms_urls_n[3]['urln']}" title="{noms_urls_n[3]['nom']}">
         </th>
         <th>
-            <img src ="{noms_urls[4]['url']}" title="{noms_urls[4]['nom']}" style="width: 60px; height: 60px">
+            <img src ="{noms_urls[4]['url']}" title="{noms_urls[4]['nom']}" style="width:60px; height:60px">
         </th>
     </tr>
 

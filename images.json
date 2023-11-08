@@ -138,5 +138,10 @@
 		"nom": "Orages avec forte grêle",
 		"url": "images_svg/99.svg",
 		"urln": "images_svg/99n.svg"
+	},
+	"100": {
+		"nom": "Erreur",
+		"url": "images_svg/100.svg",
+		"urln": "images_svg/100.svg"
 	}
 }
