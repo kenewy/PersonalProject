@@ -2,7 +2,7 @@
 
 ## Objectif
 
-L'objectif est de créer de façon dynamique une prévision de la météo de Montpellier sur les 4 prochains jours et actualisée toutes les trois heures.
+L'objectif est de créer de façon dynamique une prévision de la météo à Montpellier sur les 5 prochains jours et actualisée toutes les trois heures.
 
 ## Website
 
