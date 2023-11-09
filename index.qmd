@@ -55,16 +55,11 @@ if response.status_code == 200:
     direction_vent = data["daily"]["wind_direction_10m_dominant"]
     precipitations = data["daily"]["precipitation_sum"]
 
-    # Prendre les valeurs entières et remplacer les valeurs manquantes par "-" pour les températures
-    temperature_max_ent = [round(temp) if not pd.isna(
-        temp) else "-" for temp in temperature_max]
-    temperature_min_ent = [round(temp) if not pd.isna(
-        temp) else "-" for temp in temperature_min]
+    # Prendre les valeurs entières
+    temperature_max_ent = [round(temp) for temp in temperature_max]
+    temperature_min_ent = [round(temp) for temp in temperature_min]
 
-    # Remplacer les valeurs manquantes par "-" pour les autres variables
-    jour = [date if not pd.isna(date) else "-" for date in jour]
-    direction_vent = [direction if not pd.isna(
-        direction) else "-" for direction in direction_vent]
+    # Remplacer les valeurs manquantes par "-" pour la quantité de précipitations
     precipitations = [precipitation if not pd.isna(
         precipitation) else "-" for precipitation in precipitations]
 
@@ -75,10 +70,10 @@ if response.status_code == 200:
     # Prendre la moyenne des températures
     moyenne = []
     for i in range(jours+1):
-        if temperature_max_ent[i] != '-' and temperature_min_ent[i] != '-':
+        if temperature_max_ent[i] != None and temperature_min_ent[i] != None:
             moyenne.append((temperature_max_ent[i]+temperature_min_ent[i])/2)
         else:
-            moyenne.append('-')
+            moyenne.append(None)
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
@@ -204,8 +199,16 @@ def temperature_to_color(temperature):
 
 
 def generate_temperature(temperature_min, temperature_max, moyenne):
-    if moyenne == '-':
+    if temperature_min == None and temperature_max == None:
         return '-'
+    elif temperature_min != None and temperature_max == None:
+        return f'''
+                {temperature_min} °C - / °C
+        '''
+    elif temperature_min == None and temperature_max != None:
+        return f'''
+                / °C - {temperature_max} °C
+        '''
     else:
         return f'''
             <div class="mini-case" style="background-color: {temperature_to_color(moyenne)};">
@@ -232,14 +235,14 @@ for i in range(jours+1):  # Chaque jour
         # Moyenne du vent du jour i selon les valeurs disponibles
         vent[i] = round(vent[i]/a)
     else:
-        vent[i] = '-'
+        vent[i] = None
 
 
 # Echelle discrète de couleurs basée sur la vitesse du vent
 
 
 def vent_to_color(vent):
-    if vent != '-':
+    if vent != None:
         if (vent < 30):
             return 'rgba(0, 0, 0, 0)'
         elif (30 <= vent < 50):
@@ -258,7 +261,7 @@ def vent_to_color(vent):
 
 
 def generate_wind_icon(direction):
-    if direction == '-':
+    if direction == None:
         return ''
     else:
         return f'''
@@ -274,7 +277,7 @@ def generate_wind_icon(direction):
 
 
 def generate_wind(vent, direction):
-    if vent == '-':
+    if vent == None:
         return '-'
     else:
         return f'''
@@ -423,6 +426,6 @@ Météo de Montpellier pour les 5 prochains jours, aujourd'hui compris, affichan
 </ol>
 De plus, un pictogramme WMO de nuit apparaît entre chaque jour et est déterminé selon le code WMO ayant le plus grand nombre d'occurences entre 18h et 6h. Tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
 
-Certaines descriptions sont affichées en survolant les cellules et les images avec un curseur de souris. Il peut arriver que le symbole "-" s'affiche à la place de certaines données indisponibles.
+Certaines descriptions sont affichées en survolant les cellules et les images avec un curseur de souris. Il peut arriver que les symboles "-" ou "/" s'affichent à la place de certaines données indisponibles.
 
 Toutes les informations proviennent d'une API (Application Programming Interface) choisie proposée par [open-meteo.com](https://open-meteo.com/en/docs/meteofrance-api) et sont mises à jour toutes les trois heures.
