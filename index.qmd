@@ -77,6 +77,8 @@ if response.status_code == 200:
     for i in range(jours+1):
         if temperature_max_ent[i] != '-' and temperature_min_ent[i] != '-':
             moyenne.append((temperature_max_ent[i]+temperature_min_ent[i])/2)
+        else:
+            moyenne.append('-')
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
@@ -176,24 +178,40 @@ TEMPERATURES
 
 
 def temperature_to_color(temperature):
-    if (temperature < 0):
-        return 'rgb(100, 180, 210)'
-    elif (0 <= temperature < 5):
-        return 'rgb(90, 220, 200)'
-    elif (5 <= temperature < 10):
-        return 'rgb(70, 220, 120)'
-    elif (10 <= temperature < 15):
-        return 'rgb(80, 230, 40)'
-    elif (15 <= temperature < 20):
-        return 'rgb(155, 230, 20)'
-    elif (20 <= temperature < 25):
-        return 'rgb(220, 190, 10)'
-    elif (25 <= temperature < 30):
-        return 'rgb(210, 110, 10)'
-    elif (30 <= temperature < 35):
-        return 'rgb(200, 60, 0)'
+    if temperature != '-':
+        if (temperature < 0):
+            return 'rgb(100, 180, 210)'
+        elif (0 <= temperature < 5):
+            return 'rgb(90, 220, 200)'
+        elif (5 <= temperature < 10):
+            return 'rgb(70, 220, 120)'
+        elif (10 <= temperature < 15):
+            return 'rgb(80, 230, 40)'
+        elif (15 <= temperature < 20):
+            return 'rgb(155, 230, 20)'
+        elif (20 <= temperature < 25):
+            return 'rgb(220, 190, 10)'
+        elif (25 <= temperature < 30):
+            return 'rgb(210, 110, 10)'
+        elif (30 <= temperature < 35):
+            return 'rgb(200, 60, 0)'
+        else:
+            return 'rgb(200, 30, 0)'
     else:
-        return 'rgb(200, 30, 0)'
+        return ''
+
+# Afficher la température et la couleur associée si possible
+
+
+def generate_temperature(temperature_min, temperature_max, moyenne):
+    if moyenne == '-':
+        return '-'
+    else:
+        return f'''
+            <div class="mini-case" style="background-color: {temperature_to_color(moyenne)};">
+                {temperature_min} °C - {temperature_max} °C
+            </div>
+        '''
 
 
 """
@@ -210,26 +228,30 @@ for i in range(jours+1):  # Chaque jour
         if vent_h[24*i + j] != None:
             vent[i] = vent[i] + vent_h[24*i + j]
             a = a + 1
-    vent[i] = vent[i]/a  # Moyenne du vent du jour i selon les valeurs disponibles
-
-# Prendre la valeur entière du vent
-vent_ent = [round(temp) for temp in vent]
+    if a != 0:  # Si on a au moins une donnée
+        # Moyenne du vent du jour i selon les valeurs disponibles
+        vent[i] = round(vent[i]/a)
+    else:
+        vent[i] = '-'
 
 
 # Echelle discrète de couleurs basée sur la vitesse du vent
 
 
 def vent_to_color(vent):
-    if (vent < 30):
-        return 'rgba(0, 0, 0, 0)'
-    elif (30 <= vent < 50):
-        return 'rgb(255, 255, 0)'
-    elif (50 <= vent < 100):
-        return 'rgb(255, 128, 0)'
-    elif (100 <= vent < 150):
-        return 'rgb(255, 0, 0)'
+    if vent != '-':
+        if (vent < 30):
+            return 'rgba(0, 0, 0, 0)'
+        elif (30 <= vent < 50):
+            return 'rgb(255, 255, 0)'
+        elif (50 <= vent < 100):
+            return 'rgb(255, 128, 0)'
+        elif (100 <= vent < 150):
+            return 'rgb(255, 0, 0)'
+        else:
+            return 'rgb(130, 0, 255)'
     else:
-        return 'rgb(130, 0, 255)'
+        return ''
 
 
 # Afficher la direction cardinale du vent si possible
@@ -244,6 +266,20 @@ def generate_wind_icon(direction):
                 <div style="width: 0; border-left: 5px solid transparent; 
                             border-right: 5px solid transparent; border-bottom: 15px solid black;">
                 </div>
+            </div>
+        '''
+
+
+# Afficher la vitesse du vent ainsi que la direction et la couleur associées si possible
+
+
+def generate_wind(vent, direction):
+    if vent == '-':
+        return '-'
+    else:
+        return f'''
+            <div class="mini-case" style="background-color: {vent_to_color(vent)};">
+                {generate_wind_icon(direction)} {vent} km/h
             </div>
         '''
 
@@ -318,58 +354,38 @@ html_code = f"""
     <!-- Ligne 3 -->
     <tr class="couleur1" title="Températures minimale - maximale">
         <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
-            <div class="mini-case" style="background-color: {temperature_to_color(moyenne[0])};">
-                {temperature_min_ent[0]} °C - {temperature_max_ent[0]} °C
-            </div>
+            {generate_temperature(temperature_min_ent[0], temperature_max_ent[0], moyenne[0])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {temperature_to_color(moyenne[1])};">
-                {temperature_min_ent[1]} °C - {temperature_max_ent[1]} °C
-            </div>
+            {generate_temperature(temperature_min_ent[1], temperature_max_ent[1], moyenne[1])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {temperature_to_color(moyenne[2])};">
-                {temperature_min_ent[2]} °C - {temperature_max_ent[2]} °C
-            </div>
+            {generate_temperature(temperature_min_ent[2], temperature_max_ent[2], moyenne[2])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {temperature_to_color(moyenne[3])};">
-                {temperature_min_ent[3]} °C - {temperature_max_ent[3]} °C
-            </div>
+            {generate_temperature(temperature_min_ent[3], temperature_max_ent[3], moyenne[3])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {temperature_to_color(moyenne[4])};">
-                {temperature_min_ent[4]} °C - {temperature_max_ent[4]} °C
-            </div>
+            {generate_temperature(temperature_min_ent[4], temperature_max_ent[4], moyenne[4])}
         </th>
     </tr>
 
     <!-- Ligne 4 -->
     <tr class="couleur1" title="Vitesse moyenne du vent">
         <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
-            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[0])};">
-                {generate_wind_icon(direction_vent[0])} {vent_ent[0]} km/h
-            </div>
+            {generate_wind(vent[0], direction_vent[0])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[1])};">
-                {generate_wind_icon(direction_vent[1])} {vent_ent[1]} km/h
-            </div>
+            {generate_wind(vent[1], direction_vent[1])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[2])};">
-                {generate_wind_icon(direction_vent[2])} {vent_ent[2]} km/h
-            </div>
+            {generate_wind(vent[2], direction_vent[2])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[3])};">
-                {generate_wind_icon(direction_vent[3])} {vent_ent[3]} km/h
-            </div>
+            {generate_wind(vent[3], direction_vent[3])}
         </th>
         <th>
-            <div class="mini-case" style="background-color: {vent_to_color(vent_ent[4])};">
-                {generate_wind_icon(direction_vent[4])} {vent_ent[4]} km/h
-            </div>
+            {generate_wind(vent[4], direction_vent[4])}
         </th>
     </tr>
     
