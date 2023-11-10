@@ -30,7 +30,7 @@ for i in range(jours+1):
 
 # Construire l'URL de l'API selon la date (intervalle de 5 jours) à Montpellier
 
-url = f"https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&hourly=weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_direction_10m_dominant&timezone=Europe%2FBerlin&start_date={date_i}&end_date={date_j}"
+url = f"https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&hourly=weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,wind_direction_10m_dominant&timezone=Europe%2FBerlin&start_date={date_i}&end_date={date_j}"
 
 # Envoi de la requête GET aux APIs
 response = requests.get(url)
@@ -276,7 +276,7 @@ html_code = f"""
 
 <table id="myTable">
     <!-- Ligne 1 -->
-    <tr title="Date" class="couleur1">
+    <tr title="Date" style="background-color: rgb(180, 255, 255)">
         <th style="background-color: rgb(255, 255, 255); border-top:3px solid rgb(20, 15, 185); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <strong> {noms_jours[0]} </strong>
             <br>Aujourd'hui
@@ -300,7 +300,7 @@ html_code = f"""
     </tr>
 
     <!-- Ligne 2 -->
-    <tr class="couleur2" title="icône WMO">
+    <tr title="icône WMO" style="background-color: rgb(82, 177, 255)">
         <th style="border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <img class="day-image" src ="{noms_urls[0]['url']}" title="{noms_urls[0]['nom']}">
             <img class="circular-image" src ="{noms_urls_n[0]['urln']}" title="{noms_urls_n[0]['nom']}">
@@ -323,7 +323,7 @@ html_code = f"""
     </tr>
 
     <!-- Ligne 3 -->
-    <tr class="couleur1" title="Températures minimale - maximale">
+    <tr title="Températures minimale - maximale" style="background-color: rgb(180, 255, 255)">
         <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             {generate_temperature(temperature_min_ent[0], temperature_max_ent[0], moyenne[0])}
         </th>
@@ -342,7 +342,7 @@ html_code = f"""
     </tr>
 
     <!-- Ligne 4 -->
-    <tr class="couleur1" title="Vitesse moyenne du vent">
+    <tr title="Vitesse moyenne du vent" style="background-color: rgb(180, 255, 255)">
         <th style="background-color: rgb(255, 255, 255); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             {generate_wind(vent[0], direction_vent[0])}
         </th>
@@ -361,7 +361,7 @@ html_code = f"""
     </tr>
     
     <!-- Ligne 5 -->
-    <tr class="couleur1" title="Quantité de précipitations">
+    <tr title="Quantité de précipitations" style="background-color: rgb(180, 255, 255)">
         <th style="background-color: rgb(255, 255, 255); border-bottom:3px solid rgb(20, 15, 185); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
             <img src="images_svg/Water_Drop.svg"> {precipitations[0]} mm
         </th>
@@ -389,11 +389,13 @@ Météo de Montpellier pour les 5 prochains jours, aujourd'hui compris, affichan
     <li>la date,</li>
     <li>le pictogramme WMO (World Meteorological Organization),</li>
     <li>les températures minimale et maximale en valeur entière en degrés Celsius dont la couleur du fond change en fonction des valeurs,</li>
-    <li>la vitesse moyenne du vent en valeur entière en kilomètres par heure et sa direction cardinale représentée par une flèche (ou rien si la donnée est indisponible), dont la couleur du fond change en fonction de la valeur,</li>
+    <li>la vitesse moyenne du vent en valeur entière en kilomètres par heure et sa direction cardinale représentée par une flèche, dont la couleur du fond change en fonction de la valeur,</li>
     <li>et enfin la quantité de précipitations en millimètres.</li>
 </ol>
-De plus, un pictogramme WMO de nuit apparaît entre chaque jour et est déterminé selon le code WMO ayant le plus grand nombre d'occurences entre 18h et 6h. Tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
+De plus, un pictogramme WMO de nuit apparaît entre chaque jour et est déterminé selon le code WMO ayant le plus grand nombre d'occurences entre 18h et 6h. 
 
-Certaines descriptions sont affichées en survolant les cellules et les images avec un curseur de souris. Il peut arriver que les symboles "-" ou "/" s'affichent à la place de certaines données indisponibles.
+Site à usage non commercial, tous les pictogrammes proviennent du site [meteoblue.com](https://content.meteoblue.com/fr/recherche-education/specifications/standards/symboles-et-pictogrammes) et sont en format svg.
 
-Toutes les informations proviennent d'une API (Application Programming Interface) choisie proposée par [open-meteo.com](https://open-meteo.com/en/docs/meteofrance-api) et sont mises à jour toutes les trois heures.
+Certaines descriptions sont affichées en survolant les cellules ainsi que les images avec un curseur de souris. Il peut arriver que les symboles "-" ou "/" s'affichent à la place de certaines données indisponibles. C'est le cas notamment du cinquième jour dont la direction du vent et la quantité de précipitations ne sont pas encore disponibles.
+
+Toutes les informations proviennent d'une API (Application Programming Interface) choisie et proposée par [open-meteo.com](https://open-meteo.com/en/docs/meteofrance-api) et sont mises à jour toutes les trois heures.

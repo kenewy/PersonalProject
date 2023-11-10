@@ -16,16 +16,6 @@ table {
     /* Cette propriété assure que le contenu à l'intérieur du tableau ne déborde pas des coins arrondis */
 }
 
-/* Couleur tableau */
-.couleur1 {
-    background-color: rgb(180, 255, 255);
-}
-
-/* Couleur ligne 2 correspondant aux couleurs de fond des pictogrammes*/
-.couleur2 {
-    background-color: rgb(82, 177, 255);
-}
-
 /* Case températures */
 .mini-case {
     position: absolute;
