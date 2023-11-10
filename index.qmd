@@ -22,25 +22,23 @@ date_actuelle = datetime.now()
 
 # Obtenir la date du cinquième jour
 jours = 4
-date_jours = date_actuelle + timedelta(days=jours)
 
 # Formater les dates au format requis pour l'URL
 format_date = "%Y-%m-%d"
-date_i = date_actuelle.strftime(format_date)
-date_j = date_jours.strftime(format_date)
+date_i = datetime.now().strftime(format_date)
 
-# Construire l'URL de l'API "daily" selon la date (intervalle de 5 jours) à Montpellier
-latitude = 43.6109
-longitude = 3.8763
+# Prendre le nombre de jours nécessaires
+jour = []
+for i in range(jours+1):
+    date_j = (date_actuelle + timedelta(days=i)).strftime(format_date)
+    jour.append(date_j)
 
-url = f"https://api.open-meteo.com/v1/meteofrance?latitude={latitude}&longitude={longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_direction_10m_dominant&timezone=Europe%2FBerlin&start_date={date_i}&end_date={date_j}"
+# Construire l'URL de l'API selon la date (intervalle de 5 jours) à Montpellier
 
-# URL de l'API "hourly" qui servira à calculer la vitesse moyenne du vent et afficher la bonne icône WMO de nuit
-url_h = f"https://api.open-meteo.com/v1/meteofrance?latitude={latitude}&longitude={longitude}&hourly=weather_code,wind_speed_10m&timezone=Europe%2FBerlin&start_date={date_i}&end_date={date_j}"
+url = f"https://api.open-meteo.com/v1/meteofrance?latitude=43.6109&longitude=3.8763&hourly=weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_direction_10m_dominant&timezone=Europe%2FBerlin&start_date={date_i}&end_date={date_j}"
 
 # Envoi de la requête GET aux APIs
 response = requests.get(url)
-response_h = requests.get(url_h)
 
 # Vérification du statut de la requête "daily"
 if response.status_code == 200:
@@ -48,24 +46,26 @@ if response.status_code == 200:
     data = response.json()
 
     # Accéder aux données météo à partir de la réponse JSON
-    jour = data["daily"]["time"]
     wmo = data["daily"]["weather_code"]
     temperature_max = data["daily"]["temperature_2m_max"]
     temperature_min = data["daily"]["temperature_2m_min"]
     direction_vent = data["daily"]["wind_direction_10m_dominant"]
     precipitations = data["daily"]["precipitation_sum"]
+    vent_h = data["hourly"]["wind_speed_10m"]
+    wmo_h = data["hourly"]["weather_code"]
 
-    # Prendre les valeurs entières
-    temperature_max_ent = [round(temp) for temp in temperature_max]
-    temperature_min_ent = [round(temp) for temp in temperature_min]
+    # Prendre les valeurs entières si possible
+    temperature_max_ent = [round(i) if not pd.isna(
+        i) else None for i in temperature_max]
+    temperature_min_ent = [round(i) if not pd.isna(
+        i) else None for i in temperature_min]
 
     # Remplacer les valeurs manquantes par "-" pour la quantité de précipitations
-    precipitations = [precipitation if not pd.isna(
-        precipitation) else "-" for precipitation in precipitations]
+    precipitations = [i if not pd.isna(i) else "-" for i in precipitations]
 
-    # Remplacer les valeurs manquantes par la valeur 100 (qui affichera une image d'erreur) pour le code wmo
-    wmo = [code_wmo if not pd.isna(
-        code_wmo) else 100 for code_wmo in wmo]
+    # Remplacer les valeurs manquantes par la valeur 100 (qui affichera une image d'erreur) pour les code WMO
+    wmo = [i if not pd.isna(i) else 100 for i in wmo]
+    wmo_h = [i if not pd.isna(i) else 100 for i in wmo_h]
 
     # Prendre la moyenne des températures
     moyenne = []
@@ -77,23 +77,6 @@ if response.status_code == 200:
 else:
     # Affichage d'un message d'erreur si la requête échoue
     print("Erreur lors de la récupération des données météorologiques.")
-
-
-# Vérification du statut de la requête "hourly"
-if response_h.status_code == 200:
-    # Conversion des données JSON en un dictionnaire Python
-    data_h = response_h.json()
-
-    # Accéder aux données météo à partir de la réponse JSON
-    vent_h = data_h["hourly"]["wind_speed_10m"]
-    wmo_h = data_h["hourly"]["weather_code"]
-
-    # Remplacer les valeurs manquantes par la valeur 100 (qui affichera une image d'erreur) pour le code wmo_h
-    wmo_h = [code_wmo_h if not pd.isna(
-        code_wmo_h) else 100 for code_wmo_h in wmo_h]
-else:
-    # Affichage d'un message d'erreur si la requête échoue
-    print("Erreur lors de la récupération des données météorologiques horaires.")
 
 
 """
@@ -154,7 +137,7 @@ wmo_n = [0] * jours
 for i in range(jours):  # Chaque nuit
     # Utilisation de Counter pour compter les occurrences des codes WMO entre 18h et 6h du matin
     compteur = Counter(wmo_h[24*i + 18: 24*i + 30])
-    # Trouver l'élément le plus commun et son nombre d'occurrences
+    # Trouver l'élément ayant le plus grand nombre d'occurrences
     wmo_n[i] = max(compteur, key=compteur.get)
 
 # Récupérer les URLs à partir des codes WMO de nuit
@@ -173,7 +156,7 @@ TEMPERATURES
 
 
 def temperature_to_color(temperature):
-    if temperature != '-':
+    if temperature != None:
         if (temperature < 0):
             return 'rgb(100, 180, 210)'
         elif (0 <= temperature < 5):
@@ -195,12 +178,12 @@ def temperature_to_color(temperature):
     else:
         return ''
 
-# Afficher la température et la couleur associée si possible
+# Afficher les températures et la couleur associée si possible
 
 
 def generate_temperature(temperature_min, temperature_max, moyenne):
     if temperature_min == None and temperature_max == None:
-        return '-'
+        return '/ °C - / °C'
     elif temperature_min != None and temperature_max == None:
         return f'''
                 {temperature_min} °C - / °C
@@ -232,7 +215,7 @@ for i in range(jours+1):  # Chaque jour
             vent[i] = vent[i] + vent_h[24*i + j]
             a = a + 1
     if a != 0:  # Si on a au moins une donnée
-        # Moyenne du vent du jour i selon les valeurs disponibles
+        # Moyenne du vent en valeur entière du jour i selon les valeurs disponibles
         vent[i] = round(vent[i]/a)
     else:
         vent[i] = None
@@ -300,33 +283,23 @@ html_code = f"""
     <!-- Ligne 1 -->
     <tr title="Date" class="couleur1">
         <th style="background-color: rgb(255, 255, 255); border-top:3px solid rgb(20, 15, 185); border-right:3px solid rgb(20, 15, 185); border-left:3px solid rgb(20, 15, 185)">
-            <strong>
-                {noms_jours[0]}
-            </strong>
+            <strong> {noms_jours[0]} </strong>
             <br>Aujourd'hui
         </th>
         <th>
-            <strong>
-                {noms_jours[1]}
-            </strong>
+            <strong> {noms_jours[1]} </strong>
             <br>Demain
         </th>
         <th>
-            <strong>
-                {noms_jours[2]}
-            </strong>
+            <strong> {noms_jours[2]} </strong>
             <br>{dates_formatees[2]}
         </th>
         <th>
-            <strong>
-                {noms_jours[3]}
-            </strong>
+            <strong> {noms_jours[3]} </strong>
             <br>{dates_formatees[3]}
         </th>
         <th>
-            <strong>
-                {noms_jours[4]}
-            </strong>
+            <strong> {noms_jours[4]} </strong>
             <br>{dates_formatees[4]}
         </th>
     </tr>
