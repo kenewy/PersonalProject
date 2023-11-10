@@ -8,9 +8,6 @@ subtitle: "Occitanie, France, 43.61°N 3.88°E, 55m s.n.m."
 API
 """
 from IPython.display import display, HTML
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 import json
 from datetime import datetime, timedelta
 import pandas as pd
@@ -20,18 +17,16 @@ from collections import Counter
 # Obtenir la date actuelle
 date_actuelle = datetime.now()
 
-# Obtenir la date du cinquième jour
-jours = 4
-
 # Formater les dates au format requis pour l'URL
 format_date = "%Y-%m-%d"
 date_i = datetime.now().strftime(format_date)
 
 # Prendre le nombre de jours nécessaires
-jour = []
+jours = 4
+date = []
 for i in range(jours+1):
     date_j = (date_actuelle + timedelta(days=i)).strftime(format_date)
-    jour.append(date_j)
+    date.append(date_j)
 
 # Construire l'URL de l'API selon la date (intervalle de 5 jours) à Montpellier
 
@@ -110,7 +105,7 @@ def formater_date(date):
 
 
 # Utiliser la fonction pour formater les dates dans la liste
-noms_jours, dates_formatees = zip(*[formater_date(date) for date in jour])
+noms_jours, dates_formatees = zip(*[formater_date(i) for i in date])
 
 
 """
